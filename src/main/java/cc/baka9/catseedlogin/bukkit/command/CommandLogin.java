@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
+import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+
 public class CommandLogin implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String lable, String[] args){
@@ -21,30 +23,30 @@ public class CommandLogin implements CommandExecutor {
         Player player = (Player) sender;
         String name = player.getName();
         if (LoginPlayerHelper.isLogin(name)) {
-            sender.sendMessage(Config.Language.LOGIN_REPEAT);
+            sender.sendMessage(translate("login-already"));
             return true;
         }
         LoginPlayer lp = Cache.getIgnoreCase(name);
         if (lp == null) {
-            sender.sendMessage(Config.Language.LOGIN_NOREGISTER);
+            sender.sendMessage(translate("not-registered"));
             return true;
         }
         if (Objects.equals(Crypt.encrypt(name, args[0]), lp.getPassword().trim())) {
             LoginPlayerHelper.add(lp);
             CatSeedPlayerLoginEvent loginEvent = new CatSeedPlayerLoginEvent(player, lp.getEmail(), CatSeedPlayerLoginEvent.Result.SUCCESS);
             Bukkit.getServer().getPluginManager().callEvent(loginEvent);
-            sender.sendMessage(Config.Language.LOGIN_SUCCESS);
+            sender.sendMessage(translate("login-success"));
             player.updateInventory();
             LoginPlayerHelper.recordCurrentIP(player, lp);
             if (Config.Settings.AfterLoginBack && Config.Settings.CanTpSpawnLocation) {
                 Config.getOfflineLocation(player).ifPresent(player::teleport);
             }
         } else {
-            sender.sendMessage(Config.Language.LOGIN_FAIL);
+            sender.sendMessage(translate("login-wrong-password"));
             CatSeedPlayerLoginEvent loginEvent = new CatSeedPlayerLoginEvent(player, lp.getEmail(), CatSeedPlayerLoginEvent.Result.FAIL);
             Bukkit.getServer().getPluginManager().callEvent(loginEvent);
             if (Config.EmailVerify.Enable) {
-                sender.sendMessage(Config.Language.LOGIN_FAIL_IF_FORGET);
+                sender.sendMessage(translate("login-wrong-password-can-repw"));
             }
         }
         return true;

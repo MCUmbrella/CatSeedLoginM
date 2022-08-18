@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+
 public class CatSeedLogin extends JavaPlugin {
 
     public static CatSeedLogin instance;
@@ -25,24 +27,28 @@ public class CatSeedLogin extends JavaPlugin {
 
     @Override
     public void onEnable(){
+        getLogger().info("CatSeedLogin version " + getDescription().getVersion());
+        getLogger().info("Modified by MCUmbrella");
         instance = this;
         //Config
         try {
             Config.load();
-            Config.save();
+            saveResource("settings.example.yml", true);
         } catch (Exception e) {
+            getServer().getLogger().severe("Failed to load config file!");
             e.printStackTrace();
-            getServer().getLogger().warning("加载配置文件时出错，请检查你的配置文件。");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
         }
         sql = Config.MySQL.Enable ? new MySQL(this) : new SQLite(this);
         try {
-
             sql.init();
-
             Cache.refreshAll();
         } catch (Exception e) {
-            getLogger().warning("§c加载数据库时出错");
+            getLogger().severe(translate("database-error"));
             e.printStackTrace();
+            getServer().getPluginManager().disablePlugin(this);
+            return;
         }
         //Listeners
         getServer().getPluginManager().registerEvents(new Listeners(), this);
@@ -53,7 +59,7 @@ public class CatSeedLogin extends JavaPlugin {
             ProtocolLibListeners.enable();
             loadProtocolLib = true;
         } catch (ClassNotFoundException e) {
-            getLogger().warning("服务器没有装载ProtocolLib插件，这将无法使用登录前隐藏背包");
+            getLogger().warning(translate("no-protocolLib"));
         }
 
         // bc
@@ -128,7 +134,7 @@ public class CatSeedLogin extends JavaPlugin {
         try {
             sql.getConnection().close();
         } catch (Exception e) {
-            getLogger().warning("获取数据库连接时出错");
+            getLogger().warning(translate("database-error"));
             e.printStackTrace();
         }
         super.onDisable();

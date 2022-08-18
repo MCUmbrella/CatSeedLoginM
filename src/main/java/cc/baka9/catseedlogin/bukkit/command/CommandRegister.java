@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+
 public class CommandRegister implements CommandExecutor {
 
     @Override
@@ -23,31 +25,31 @@ public class CommandRegister implements CommandExecutor {
         Player player = (Player) sender;
         String name = sender.getName();
         if (LoginPlayerHelper.isLogin(name)) {
-            sender.sendMessage(Config.Language.REGISTER_AFTER_LOGIN_ALREADY);
+            sender.sendMessage(translate("reg-already-registered"));
             return true;
         }
         if (LoginPlayerHelper.isRegister(name)) {
-            sender.sendMessage(Config.Language.REGISTER_BEFORE_LOGIN_ALREADY);
+            sender.sendMessage(translate("reg-player-name-taken"));
             return true;
         }
         if (!args[0].equals(args[1])) {
-            sender.sendMessage(Config.Language.REGISTER_PASSWORD_CONFIRM_FAIL);
+            sender.sendMessage(translate("reg-password-not-same"));
             return true;
         }
         if (!Util.passwordIsDifficulty(args[0])) {
-            sender.sendMessage(Config.Language.COMMON_PASSWORD_SO_SIMPLE);
+            sender.sendMessage(translate("password-too-weak"));
             return true;
         }
         if (!Cache.isLoaded) {
             return true;
         }
-        sender.sendMessage("§e注册中..");
+        sender.sendMessage(translate("please-wait"));
         CatSeedLogin.instance.runTaskAsync(() -> {
             try {
                 String currentIp = player.getAddress().getAddress().getHostAddress();
                 List<LoginPlayer> LoginPlayerListlikeByIp = CatSeedLogin.sql.getLikeByIp(currentIp);
                 if (LoginPlayerListlikeByIp.size() >= Config.Settings.IpRegisterCountLimit) {
-                    sender.sendMessage(Config.Language.REGISTER_MORE
+                    sender.sendMessage(translate("reg-accounts-limit-exceeded")
                             .replace("{count}", String.valueOf(LoginPlayerListlikeByIp.size()))
                             .replace("{accounts}", String.join(", ", LoginPlayerListlikeByIp.stream().map(LoginPlayer::getName).toArray(String[]::new))));
                 } else {
@@ -59,7 +61,7 @@ public class CommandRegister implements CommandExecutor {
                         CatSeedPlayerRegisterEvent event = new CatSeedPlayerRegisterEvent(Bukkit.getPlayer(sender.getName()));
                         Bukkit.getServer().getPluginManager().callEvent(event);
                     });
-                    sender.sendMessage(Config.Language.REGISTER_SUCCESS);
+                    sender.sendMessage(translate("reg-success"));
                     player.updateInventory();
                     LoginPlayerHelper.recordCurrentIP(player, lp);
                 }
@@ -67,7 +69,7 @@ public class CommandRegister implements CommandExecutor {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                sender.sendMessage("§c服务器内部错误!");
+                sender.sendMessage(translate("internal-error"));
             }
         });
         return true;

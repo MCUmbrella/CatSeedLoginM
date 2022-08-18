@@ -1,7 +1,6 @@
 package cc.baka9.catseedlogin.bukkit;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,19 +8,18 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+
 /**
  * 加载/保存/重载 yml配置文件
  * config.yml 玩家退出服务器的位置
  * emailVerify.yml 邮箱找回密码
- * language.yml 语言，提示
  * settings.yml 设置
  * sql.yml 数据库
  */
@@ -71,6 +69,7 @@ public class Config {
      * 设置
      */
     public static class Settings {
+        public static String language;
         public static int IpRegisterCountLimit;
         public static int IpCountLimit;
         public static Location SpawnLocation;
@@ -82,7 +81,7 @@ public class Config {
         public static boolean AfterLoginBack;
         public static boolean CanTpSpawnLocation;
         public static List<Pattern> CommandWhiteList = new ArrayList<>();
-        public static int AutoKick;
+        public static long AutoKick;
         // 死亡状态退出游戏是否记录退出位置 (玩家可以通过死亡时退出服务器然后重新进入，再复活，登录返回死亡地点)
         public static boolean DeathStateQuitRecordLocation;
 
@@ -90,6 +89,9 @@ public class Config {
             FileConfiguration config = getConfig("settings.yml");
             FileConfiguration resourceConfig = getResourceConfig("settings.yml");
 
+            language = config.getString("language");
+            I18nManager.setLanguage(language);
+            CatSeedLogin.instance.getLogger().info("Language: " + translate("language") + " (" + language + ") by " + translate("language-file-contributor"));
             IpRegisterCountLimit = config.getInt("IpRegisterCountLimit", resourceConfig.getInt("IpRegisterCountLimit"));
             IpCountLimit = config.getInt("IpCountLimit", resourceConfig.getInt("IpCountLimit"));
             LimitChineseID = config.getBoolean("LimitChineseID", resourceConfig.getBoolean("LimitChineseID"));
@@ -105,15 +107,14 @@ public class Config {
             }
             Settings.CommandWhiteList.clear();
             Settings.CommandWhiteList.addAll(commandWhiteList.stream().map(Pattern::compile).collect(Collectors.toList()));
-            AutoKick = config.getInt("AutoKick", 120);
+            AutoKick = config.getLong("AutoKick", 120L);
             SpawnLocation = str2Location(config.getString("SpawnLocation"));
             DeathStateQuitRecordLocation = config.getBoolean("DeathStateQuitRecordLocation", resourceConfig.getBoolean("DeathStateQuitRecordLocation"));
-
-
         }
 
         public static void save(){
             FileConfiguration config = getConfig("settings.yml");
+            config.set("language", language);
             config.set("IpRegisterCountLimit", IpRegisterCountLimit);
             config.set("IpCountLimit", IpCountLimit);
             config.set("SpawnWorld", null);
@@ -134,56 +135,6 @@ public class Config {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * 语言，提示
-     */
-    public static class Language {
-        public static String LOGIN_REQUEST;
-        public static String REGISTER_REQUEST;
-        public static String LOGIN_NOREGISTER;
-        public static String LOGIN_REPEAT;
-        public static String LOGIN_SUCCESS;
-        public static String LOGIN_FAIL;
-        public static String LOGIN_FAIL_IF_FORGET;
-        public static String REGISTER_SUCCESS;
-        public static String REGISTER_BEFORE_LOGIN_ALREADY;
-        public static String REGISTER_AFTER_LOGIN_ALREADY;
-        public static String REGISTER_PASSWORD_CONFIRM_FAIL;
-        public static String COMMON_PASSWORD_SO_SIMPLE;
-        public static String RESETPASSWORD_NOREGISTER;
-        public static String RESETPASSWORD_EMAIL_DISABLE;
-        public static String RESETPASSWORD_EMAIL_NO_SET;
-        public static String RESETPASSWORD_EMAIL_REPEAT_SEND_MESSAGE;
-        public static String RESETPASSWORD_EMAIL_SENDING_MESSAGE;
-        public static String RESETPASSWORD_EMAIL_SENT_MESSAGE;
-        public static String RESETPASSWORD_EMAIL_WARN;
-        public static String RESETPASSWORD_SUCCESS;
-        public static String RESETPASSWORD_EMAILCODE_INCORRECT;
-        public static String RESETPASSWORD_FAIL;
-        public static String CHANGEPASSWORD_NOREGISTER;
-        public static String CHANGEPASSWORD_NOLOGIN;
-        public static String CHANGEPASSWORD_OLDPASSWORD_INCORRECT;
-        public static String CHANGEPASSWORD_PASSWORD_CONFIRM_FAIL;
-        public static String CHANGEPASSWORD_SUCCESS;
-        public static String AUTO_KICK;
-        public static String REGISTER_MORE;
-
-        public static void load(){
-            FileConfiguration resourceConfig = getResourceConfig("language.yml");
-            FileConfiguration config = getConfig("language.yml");
-            for (Field field : Language.class.getDeclaredFields()) {
-                try {
-                    String fieldName = field.getName();
-                    String value = config.getString(fieldName, resourceConfig.getString(fieldName));
-                    field.set(null, value.replace('&', ChatColor.COLOR_CHAR));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
     }
 
     /**
@@ -238,7 +189,6 @@ public class Config {
         MySQL.load();
         Settings.load();
         EmailVerify.load();
-        Language.load();
         BungeeCord.load();
     }
 

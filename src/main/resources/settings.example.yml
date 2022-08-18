@@ -1,0 +1,68 @@
+# This file is an example of the settings.yml file.
+# Every setting is explained in detail in the comments.
+# 此文件是settings.yml文件的示例，每个设置项都在注释中作了详细解释。
+
+# The language of the plugin.
+# 插件使用的语言。
+language: "zh_CN"
+
+# How many accounts can be created per IP address?
+# 每个IP地址可注册的账号数量。
+IpRegisterCountLimit: 2
+
+# How many players with the same IP address can be online at the same time?
+# 同一个IP地址同时在线玩家的最大值。
+IpCountLimit: 2
+
+# Only allow players with English alphabets, numbers, and the "_" characters in their names?
+# If true, players with other characters in their names will not be able to join the server.
+# 只允许在玩家名中使用英文字母、数字和下划线？
+# 设定为true时，将不允许玩家名中包含其它字符的玩家加入服务器。
+LimitChineseID: true
+
+# The minimum length of the player's name.
+# 玩家名的最小长度。
+MinLengthID: 2
+
+# The maximum length of the player's name.
+# 玩家名的最大长度。
+MaxLengthID: 15
+
+# Should we protect non-logged in players from being attacked?
+# If true, non-logged in players will not gain damage.
+# 如果设定为true，未登录玩家将不会受到伤害。
+BeforeLoginNoDamage: true
+
+# After how many seconds should a player be able to re-enter the server?
+# 玩家在下线多少秒后可以重新进入服务器？
+ReenterInterval: 60
+
+# Should we teleport players to their logout location after they logged in successfully?
+# If true, logged-in players will be teleported.
+# 如果设定为true，玩家登录成功后将会被传送到下线位置。
+AfterLoginBack: true
+
+# Should we freeze the non-logged in players at the login location?
+# If true, non-logged in players will not be able to move.
+# 如果设定为true，未登录玩家将不能移动。
+CanTpSpawnLocation: true
+
+# What commands can be used before logging in?
+# The default values are suitable for most situations. RegEx is supported.
+# 在登录之前可以使用的命令。
+# 默认值适合大多数情况，支持正则表达式。
+CommandWhiteList:
+  - /(?i)l(ogin)?(\z| .*)
+  - /(?i)reg(ister)?(\z| .*)
+  - /(?i)resetpassword?(\z| .*)
+  - /(?i)repw?(\z| .*)
+  - /(?i)worldedit cui
+
+# After how many seconds should a player be kicked if they haven't logged in successfully?
+# 如果玩家一直没登录成功，多少秒后将会被踢出服务器？
+AutoKick: 120
+
+# Should we save the player's logout location after they died and left the server without respawning?
+# If true, the dead player's logout location will be saved.
+# 如果设定为true，玩家死亡后不复活直接下线也会被保存下线位置。
+DeathStateQuitRecordLocation: true

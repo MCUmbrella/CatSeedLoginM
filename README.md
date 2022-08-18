@@ -29,146 +29,173 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 * 复制一份插件再放入BungeeCord的plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin-Bungee文件夹，修改bungeecord.yml中的配置，然后执行重载指令
 ## 指令
 ### 登录
-* /login 密码
-* /l 密码
+* `/login 密码`
+* `/l 密码`
 ### 注册密码
-* /register 密码 重复密码
-* /reg 密码 重复密码
+* `/register 密码 重复密码`
+* `/reg 密码 重复密码`
 ### 修改密码
-* /changepassword 旧密码 新密码 重复新密码
-* /changepw 旧密码 新密码 重复新密码
+* `/changepassword 旧密码 新密码 重复新密码`
+* `/changepw 旧密码 新密码 重复新密码`
 ### 绑定邮箱
-* /bindemail set 邮箱
-* /bdmail set 邮箱
+* `/bindemail set 邮箱`
+* `/bdmail set 邮箱`
 ### 用邮箱收到的验证码完成绑定
-* /bindemail verify 验证码
-* /bdmail verify 验证码
+* `/bindemail verify 验证码`
+* `/bdmail verify 验证码`
 ### 忘记密码，请求服务器给自己绑定的邮箱发送重置密码的验证码
-* /resetpassword forget
-* /repw forget
+* `/resetpassword forget`
+* `/repw forget`
 ### 用邮箱收到的验证码重置密码
-* /bindemail re 验证码 新密码
-* /bdmail re 验证码 新密码
+* `/bindemail re 验证码 新密码`
+* `/bdmail re 验证码 新密码`
 ### 管理指令
 ### 添加登陆之前允许执行的指令 (支持正则表达式)
-* /catseedlogin commandWhiteListAdd 指令
+* `/catseedlogin commandWhiteListAdd 指令`
 ### 删除登陆之前允许执行的指令 (支持正则表达式)
-* /catseedlogin commandWhiteListDel 指令
+* `/catseedlogin commandWhiteListDel 指令`
 ### 查看登陆之前允许执行的指令 (支持正则表达式)
-* /catseedlogin commandWhiteListInfo
+* `/catseedlogin commandWhiteListInfo`
 ### 设置相同ip注册数量限制 （默认数量2）
-* /catseedlogin setIpRegCountLimit 数量
+* `/catseedlogin setIpRegCountLimit 数量`
 ### 设置相同ip登录数量限制 （默认数量2）
-* /catseedlogin setIpCountLimit 数量
+* `/catseedlogin setIpCountLimit 数量`
 ### 设置游戏名最小和最大长度 (默认最小是2 最大是15)
-* /catseedlogin setIdLength 最短 最长
+* `/catseedlogin setIdLength 最短 最长`
 ### 离开服务器重新进入间隔限制 单位：tick (1秒等于20tick) (默认60tick)
-* /catseedlogin setReenterInterval 间隔
+* `/catseedlogin setReenterInterval 间隔`
 ### 设置玩家登陆地点为你站着的位置 (默认登陆地点为world世界的出生点)
-* /catseedlogin setSpawnLocation
+* `/catseedlogin setSpawnLocation`
 ### 设置自动踢出未登录的玩家 (默认120秒，小于1秒则关闭此功能)
-* /catseedlogin setAutoKick 秒数
+* `/catseedlogin setAutoKick 秒数`
 ### 打开/关闭 限制中文游戏名 (默认打开)
-* /catseedlogin limitChineseID
+* `/catseedlogin limitChineseID`
 ### 打开/关闭 登陆之前是否受到伤害 (默认登陆之前不受到伤害)
-* /catseedlogin beforeLoginNoDamage
+* `/catseedlogin beforeLoginNoDamage`
 ### 打开/关闭 登陆之后是否返回退出地点 (默认打开)
-* /catseedlogin afterLoginBack
+* `/catseedlogin afterLoginBack`
 ### 打开/关闭 登录之前是否强制在登陆地点 (默认打开)
-* /catseedlogin canTpSpawnLocation
+* `/catseedlogin canTpSpawnLocation`
 ### 打开/关闭 死亡状态退出游戏记录退出位置 (默认打开)
-* /catseedlogin deathStateQuitRecordLocation
+* `/catseedlogin deathStateQuitRecordLocation`
 ### 管理员强制删除账户
-* /catseedlogin delPlayer 玩家名
+* `/catseedlogin delPlayer 玩家名`
 ### 管理员强制设置玩家密码
-* /catseedlogin setPwd 玩家名 密码
+* `/catseedlogin setPwd 玩家名 密码`
 ### 重载配置文件
-* /catseedlogin reload
+* `/catseedlogin reload`
 ## 权限
-* catseedlogin.command.catseedlogin 管理员指令/catseedlogin 使用权限
+* `catseedlogin.command.catseedlogin`: 管理员指令/catseedlogin使用权限
 ## 配置文件
-### settings.yml
-> \#相同ip注册数量限制  
-IpRegisterCountLimit: 2  
-\#相同ip登录数量限制  
-IpCountLimit: 2  
-\#登录点,默认是world主世界出生点,推荐用指令设置  
-SpawnLocation: 世界名:x轴:y轴:z轴:yaw:pitch  
-\#是否限制中文ID  
-LimitChineseID: true  
-\#游戏ID最小长度  
-MinLengthID: 2  
-\#游戏ID最大长度  
-MaxLengthID: 15  
-\#登陆之前不受到伤害  
-BeforeLoginNoDamage: true  
-\#离开服务器重新进入的间隔限制 单位：tick（如果设置3秒则是60）  
-ReenterInterval: 60  
-\#登陆之后是否返回退出地点  
-AfterLoginBack: true  
-\#登录之前是否强制在登陆地点  
-CanTpSpawnLocation: true  
-\#登陆之前允许执行的指令 (支持正则表达式)  
-CommandWhiteList:  
-  \- /(?i)l(ogin)?(\z| .\*)  
-  \- /(?i)reg(ister)?(\z| .\*)  
-  \- /(?i)resetpassword?(\z| .\*)  
-  \- /(?i)repw?(\z| .\*)  
-  \- /(?i)worldedit cui  
-\#设置自动踢出未登录的玩家 (默认120秒，小于1秒则关闭此功能)  
-AutoKick: 120  
-\#死亡状态退出游戏是否记录退出位置  
+<details><summary>核心配置：settings.yml</summary><p>
+
+插件也会在插件目录下生成一个叫settings.example.yml的带注释的示例配置文件供你参考。
+```yaml
+# 插件使用的语言。
+language: "zh_CN"
+# 每个IP地址可注册的账号数量。
+IpRegisterCountLimit: 2
+# 同一个IP地址同时在线玩家的最大值。
+IpCountLimit: 2
+# 只允许在玩家名中使用英文字母、数字和下划线？
+# 设定为true时，将不允许玩家名中包含其它字符的玩家加入服务器。
+LimitChineseID: true
+# 玩家名的最小长度。
+MinLengthID: 2
+# 玩家名的最大长度。
+MaxLengthID: 15
+# 如果设定为true，未登录玩家将不会受到伤害。
+BeforeLoginNoDamage: true
+# 玩家在下线多少秒后可以重新进入服务器？
+ReenterInterval: 60
+# 如果设定为true，玩家登录成功后将会被传送到下线位置。
+AfterLoginBack: true
+# 如果设定为true，未登录玩家将不能移动。
+CanTpSpawnLocation: true
+# 在登录之前可以使用的命令。
+# 默认值适合大多数情况，支持正则表达式。
+CommandWhiteList:
+  - /(?i)l(ogin)?(\z| .*)
+  - /(?i)reg(ister)?(\z| .*)
+  - /(?i)resetpassword?(\z| .*)
+  - /(?i)repw?(\z| .*)
+  - /(?i)worldedit cui
+# 如果玩家一直没登录成功，多少秒后将会被踢出服务器？
+AutoKick: 120
+# 如果设定为true，玩家死亡后不复活直接下线也会被保存下线位置。
 DeathStateQuitRecordLocation: true
-### sql.yml
+```
+
+</p></details>
+
+<details><summary>数据库配置：sql.yml</summary><p>
+
 如果不使用mysql数据库储存，就请无视此配置  
-> MySQL:  
-\#是否开启数据库功能（false = 不开启）  
+```yaml
+MySQL:  
+# 是否开启数据库功能（false = 不开启）  
   Enable: false  
   Host: 127.0.0.1  
   Port: '3306'  
   Database: databaseName  
   User: root  
-  Password: root  
-### emailVerify.yml 
+  Password: root
+```
+
+</p></details>
+
+<details><summary>重置密码邮件配置：emailVerify.yml</summary><p>
+
 如果不使用邮箱一系列功能，就请无视此配置  
-> \#是否开启邮箱系列的功能（false = 不开启）  
+```yaml
+# 是否开启邮箱系列的功能（false = 不开启）  
 Enable: false  
 EmailAccount: "763737569@qq.com"  
 EmailPassword: "123456"  
 EmailSmtpHost: "smtp.qq.com"  
 EmailSmtpPort: "465"  
 SSLAuthVerify: true  
-\#发件人的名字  
- FromPersonal: "xxx服务器"  
-### language.yml
-语言文件  
-内容省略...
+# 发件人的名字  
+FromPersonal: "xxx服务器"
+```
+
+</p></details>
+
 ## 配合BungeeCord连接多个子服
 插件可以在子服和bc端上运行，如果你是bc端连接多个子服的服务器架构，你需要在作为登陆服的那个子服和bc端都装入这个插件，并设置bungeecord.yml配置文件
-### 子服配置文件
-#### bungeecord.yml
-> \#是否开启bungeecord模式（false = 不开启）  
+
+<details><summary>子服配置文件：bungeecord.yml</summary><p>
+
+```yaml
+# 是否开启bungeecord模式（false = 不开启）  
 Enable: false  
-\#设置IP（如果可以建议使用内网），会使用这个ip开启一个通讯服务与bc建立端通讯  
+# 设置IP（如果可以建议使用内网），会使用这个ip开启一个通讯服务与bc建立端通讯  
 Host: 127.0.0.1  
-\#设置端口  
+# 设置端口  
 Port: 2333  
-\#验证密钥，类似设置密码一样，这里填写一串无法被人猜到无规律的字符（如果是内网可以不写）  
-AuthKey: ""  
-### bc端配置文件
-#### bungeecord.yml
-> \#设置IP，需要跟子服的一样（如果可以建议使用内网），从这个ip跟子服建立通讯  
-Host: 127.0.0.1  
-\#设置端口，需要跟子服一样  
-Port: 2333  
-\#作为登录服的服务器  
-LoginServerName: "lobby"  
-\#验证密钥，需要跟子服一样  
+# 验证密钥，类似设置密码一样，这里填写一串无法被人猜到无规律的字符（如果是内网可以不写）  
 AuthKey: ""
+```
+</p></details>
+
+<details><summary>bc端配置文件：bungeecord.yml</summary><p>
+
+```yaml
+# 设置IP，需要跟子服的一样（如果可以建议使用内网），从这个ip跟子服建立通讯  
+Host: 127.0.0.1  
+# 设置端口，需要跟子服一样  
+Port: 2333  
+# 作为登录服的服务器  
+LoginServerName: "lobby"  
+# 验证密钥，需要跟子服一样  
+AuthKey: ""
+```
+
+</p></details>
+
 ### bc端指令
 #### 重載bc端本插件的配置文件
-/CatSeedLoginBungee reload  
-/cslb reload  
+`/CatSeedLoginBungee reload  ` 或 `/cslb reload  `
 
 ## 开发者部分
 ### 事件

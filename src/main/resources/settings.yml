@@ -1,3 +1,7 @@
+# See 'settings.example.yml' for help.
+# 查看'settings.example.yml'文件以获取帮助。
+
+language: zh_CN
 IpRegisterCountLimit: 2
 IpCountLimit: 2
 LimitChineseID: true

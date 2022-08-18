@@ -28,6 +28,9 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 * 插件放入作为登陆服的那个子服plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin文件夹修改bungeecord.yml中的配置，然后执行重载指令
 * 复制一份插件再放入BungeeCord的plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin-Bungee文件夹，修改bungeecord.yml中的配置，然后执行重载指令
 ## 指令
+
+<details><summary>点我展开</summary><p>
+
 ### 登录
 * `/login 密码`
 * `/l 密码`
@@ -84,6 +87,9 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 * `/catseedlogin setPwd 玩家名 密码`
 ### 重载配置文件
 * `/catseedlogin reload`
+
+</p></details>
+
 ## 权限
 * `catseedlogin.command.catseedlogin`: 管理员指令/catseedlogin使用权限
 ## 配置文件

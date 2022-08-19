@@ -5,7 +5,7 @@ import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 
 public class TaskSendLoginMessage extends Task {

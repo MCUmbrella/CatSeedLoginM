@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandChangePassword implements CommandExecutor {
     @Override
@@ -62,8 +62,8 @@ public class CommandChangePassword implements CommandExecutor {
                     if (player != null && player.isOnline()) {
                         player.sendMessage(translate("chpw-success"));
                         Config.setOfflineLocation(player);
-                        if (Config.Settings.CanTpSpawnLocation) {
-                            player.teleport(Config.Settings.SpawnLocation);
+                        if (Config.Settings.noMoveBeforeLogin) {
+                            player.teleport(Config.Settings.spawnLocation);
                             if (CatSeedLogin.loadProtocolLib) {
                                 LoginPlayerHelper.sendBlankInventoryPacket(player);
                             }

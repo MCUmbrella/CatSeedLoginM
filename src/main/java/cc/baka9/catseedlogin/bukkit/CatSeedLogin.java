@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CatSeedLogin extends JavaPlugin {
 
@@ -126,7 +126,7 @@ public class CatSeedLogin extends JavaPlugin {
         Task.cancelAll();
         Bukkit.getOnlinePlayers().forEach(p -> {
             if (!LoginPlayerHelper.isLoggedIn(p.getName())) return;
-            if (!p.isDead() || Config.Settings.DeathStateQuitRecordLocation) {
+            if (!p.isDead() || Config.Settings.saveDeadPlayerLogoutLocation) {
                 Config.setOfflineLocation(p);
             }
 
@@ -137,6 +137,7 @@ public class CatSeedLogin extends JavaPlugin {
             getLogger().warning(translate("database-error"));
             e.printStackTrace();
         }
+        Config.save();
         super.onDisable();
     }
 

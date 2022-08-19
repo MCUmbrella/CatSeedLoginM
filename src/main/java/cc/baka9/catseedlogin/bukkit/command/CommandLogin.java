@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandLogin implements CommandExecutor {
     @Override
@@ -38,7 +38,7 @@ public class CommandLogin implements CommandExecutor {
             sender.sendMessage(translate("login-success"));
             player.updateInventory();
             LoginPlayerHelper.recordCurrentIP(player, lp);
-            if (Config.Settings.AfterLoginBack && Config.Settings.CanTpSpawnLocation) {
+            if (Config.Settings.backAfterLogin && Config.Settings.noMoveBeforeLogin) {
                 Config.getOfflineLocation(player).ifPresent(player::teleport);
             }
         } else {

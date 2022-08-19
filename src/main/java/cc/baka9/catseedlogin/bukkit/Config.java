@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import vip.floatationdevice.msu.I18nUtil;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +15,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 /**
  * 加载/保存/重载 yml配置文件
@@ -70,65 +71,65 @@ public class Config {
      */
     public static class Settings {
         public static String language;
-        public static int IpRegisterCountLimit;
-        public static int IpCountLimit;
-        public static Location SpawnLocation;
-        public static boolean LimitChineseID;
-        public static int MaxLengthID;
-        public static int MinLengthID;
-        public static boolean BeforeLoginNoDamage;
-        public static long ReenterInterval;
-        public static boolean AfterLoginBack;
-        public static boolean CanTpSpawnLocation;
-        public static List<Pattern> CommandWhiteList = new ArrayList<>();
-        public static long AutoKick;
+        public static int maxRegPerIP;
+        public static int maxOnlinePerIP;
+        public static Location spawnLocation;
+        public static boolean forceStandardPlayerName;
+        public static int maxPlayerNameLength;
+        public static int minPlayerNameLength;
+        public static boolean noDamageBeforeLogin;
+        public static long rejoinInterval;
+        public static boolean backAfterLogin;
+        public static boolean noMoveBeforeLogin;
+        public static List<Pattern> commandWhitelist = new ArrayList<>();
+        public static long loginTimeout;
         // 死亡状态退出游戏是否记录退出位置 (玩家可以通过死亡时退出服务器然后重新进入，再复活，登录返回死亡地点)
-        public static boolean DeathStateQuitRecordLocation;
+        public static boolean saveDeadPlayerLogoutLocation;
 
         public static void load(){
             FileConfiguration config = getConfig("settings.yml");
             FileConfiguration resourceConfig = getResourceConfig("settings.yml");
 
-            language = config.getString("language");
-            I18nManager.setLanguage(language);
-            CatSeedLogin.instance.getLogger().info("Language: " + translate("language") + " (" + language + ") by " + translate("language-file-contributor"));
-            IpRegisterCountLimit = config.getInt("IpRegisterCountLimit", resourceConfig.getInt("IpRegisterCountLimit"));
-            IpCountLimit = config.getInt("IpCountLimit", resourceConfig.getInt("IpCountLimit"));
-            LimitChineseID = config.getBoolean("LimitChineseID", resourceConfig.getBoolean("LimitChineseID"));
-            MinLengthID = config.getInt("MinLengthID", resourceConfig.getInt("MinLengthID"));
-            MaxLengthID = config.getInt("MaxLengthID", resourceConfig.getInt("MaxLengthID"));
-            BeforeLoginNoDamage = config.getBoolean("BeforeLoginNoDamage", resourceConfig.getBoolean("BeforeLoginNoDamage"));
-            ReenterInterval = config.getLong("ReenterInterval", resourceConfig.getLong("ReenterInterval"));
-            AfterLoginBack = config.getBoolean("AfterLoginBack", resourceConfig.getBoolean("AfterLoginBack"));
-            CanTpSpawnLocation = config.getBoolean("CanTpSpawnLocation", resourceConfig.getBoolean("CanTpSpawnLocation"));
-            List<String> commandWhiteList = config.getStringList("CommandWhiteList");
-            if (commandWhiteList.size() == 0) {
-                commandWhiteList = resourceConfig.getStringList("CommandWhiteList");
+            language = config.getString("language", "en_US");
+            I18nUtil.setLanguage(CatSeedLogin.instance, language);
+            CatSeedLogin.instance.getLogger().info("Language: " + I18nUtil.getLanguage() + " (" + language + ") by " + I18nUtil.getLanguageFileContributor());
+            maxRegPerIP = config.getInt("maxRegPerIP", resourceConfig.getInt("maxRegPerIP"));
+            maxOnlinePerIP = config.getInt("maxOnlinePerIP", resourceConfig.getInt("maxOnlinePerIP"));
+            forceStandardPlayerName = config.getBoolean("forceStandardPlayerName", resourceConfig.getBoolean("forceStandardPlayerName"));
+            minPlayerNameLength = config.getInt("minPlayerNameLength", resourceConfig.getInt("minPlayerNameLength"));
+            maxPlayerNameLength = config.getInt("maxPlayerNameLength", resourceConfig.getInt("maxPlayerNameLength"));
+            noDamageBeforeLogin = config.getBoolean("noDamageBeforeLogin", resourceConfig.getBoolean("noDamageBeforeLogin"));
+            rejoinInterval = config.getLong("rejoinInterval", resourceConfig.getLong("rejoinInterval"));
+            backAfterLogin = config.getBoolean("backAfterLogin", resourceConfig.getBoolean("backAfterLogin"));
+            noMoveBeforeLogin = config.getBoolean("noMoveBeforeLogin", resourceConfig.getBoolean("noMoveBeforeLogin"));
+            List<String> commandWhitelist = config.getStringList("commandWhitelist");
+            if (commandWhitelist.size() == 0) {
+                commandWhitelist = resourceConfig.getStringList("commandWhitelist");
             }
-            Settings.CommandWhiteList.clear();
-            Settings.CommandWhiteList.addAll(commandWhiteList.stream().map(Pattern::compile).collect(Collectors.toList()));
-            AutoKick = config.getLong("AutoKick", 120L);
-            SpawnLocation = str2Location(config.getString("SpawnLocation"));
-            DeathStateQuitRecordLocation = config.getBoolean("DeathStateQuitRecordLocation", resourceConfig.getBoolean("DeathStateQuitRecordLocation"));
+            Settings.commandWhitelist.clear();
+            Settings.commandWhitelist.addAll(commandWhitelist.stream().map(Pattern::compile).collect(Collectors.toList()));
+            loginTimeout = config.getLong("loginTimeout", 120L);
+            spawnLocation = str2Location(config.getString("spawnLocation"));
+            saveDeadPlayerLogoutLocation = config.getBoolean("saveDeadPlayerLogoutLocation", resourceConfig.getBoolean("saveDeadPlayerLogoutLocation"));
         }
 
         public static void save(){
             FileConfiguration config = getConfig("settings.yml");
             config.set("language", language);
-            config.set("IpRegisterCountLimit", IpRegisterCountLimit);
-            config.set("IpCountLimit", IpCountLimit);
-            config.set("SpawnWorld", null);
-            config.set("LimitChineseID", LimitChineseID);
-            config.set("MinLengthID", MinLengthID);
-            config.set("MaxLengthID", MaxLengthID);
-            config.set("BeforeLoginNoDamage", BeforeLoginNoDamage);
-            config.set("ReenterInterval", ReenterInterval);
-            config.set("AfterLoginBack", AfterLoginBack);
-            config.set("CanTpSpawnLocation", CanTpSpawnLocation);
-            config.set("AutoKick", AutoKick);
-            config.set("SpawnLocation", loc2String(SpawnLocation));
-            config.set("CommandWhiteList", CommandWhiteList.stream().map(Pattern::toString).collect(Collectors.toList()));
-            config.set("DeathStateQuitRecordLocation", DeathStateQuitRecordLocation);
+            config.set("maxRegPerIP", maxRegPerIP);
+            config.set("maxOnlinePerIP", maxOnlinePerIP);
+            config.set("spawnWorld", null);
+            config.set("forceStandardPlayerName", forceStandardPlayerName);
+            config.set("minPlayerNameLength", minPlayerNameLength);
+            config.set("maxPlayerNameLength", maxPlayerNameLength);
+            config.set("noDamageBeforeLogin", noDamageBeforeLogin);
+            config.set("rejoinInterval", rejoinInterval);
+            config.set("backAfterLogin", backAfterLogin);
+            config.set("noMoveBeforeLogin", noMoveBeforeLogin);
+            config.set("loginTimeout", loginTimeout);
+            config.set("spawnLocation", loc2String(spawnLocation));
+            config.set("commandWhitelist", commandWhitelist.stream().map(Pattern::toString).collect(Collectors.toList()));
+            config.set("saveDeadPlayerLogoutLocation", saveDeadPlayerLogoutLocation);
             try {
                 config.save(new File(CatSeedLogin.instance.getDataFolder(), "settings.yml"));
             } catch (IOException e) {

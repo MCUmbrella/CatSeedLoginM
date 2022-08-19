@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandResetPassword implements CommandExecutor {
     @Override
@@ -89,9 +89,9 @@ public class CommandResetPassword implements CommandExecutor {
                                 Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
                                     Player p = Bukkit.getPlayer(lp.getName());
                                     if (p != null && p.isOnline()) {
-                                        if (Config.Settings.CanTpSpawnLocation) {
+                                        if (Config.Settings.noMoveBeforeLogin) {
 //                                            PlayerTeleport.teleport(p, Config.Settings.SpawnLocation);
-                                            p.teleport(Config.Settings.SpawnLocation);
+                                            p.teleport(Config.Settings.spawnLocation);
                                         }
                                         p.sendMessage(translate("repw-success"));
                                         if (CatSeedLogin.loadProtocolLib) {

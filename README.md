@@ -1,7 +1,7 @@
-# CatSeedLogin 猫种子登陆
+# CatSeedLogin 猫种子登录
 > 插件在Spigot API 1.13.2环境下开发的，
 由于现在很多登录插件功能配置非常多，配置起来麻烦并且有很多用不到的功能。
-crazylogin在高版本有各种匪夷所思的bug（总之我是被crazylogin从1.13.2的版本劝退自己开始造起了登陆插件）
+crazylogin在高版本有各种匪夷所思的bug（总之我是被crazylogin从1.13.2的版本劝退自己开始造起了登录插件）
 authme配置文件对一些经验不足的服主配置起来极其麻烦，甚至有人从入门到弃坑
 有人测试1.7.10 和 1.11版本的服务器可以用 理论上应该支持1.7 ~ 1.18.1 一般都是低版本向上兼容。
 ## 基础功能
@@ -34,7 +34,7 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 #### 如果是正常使用：
 * 插件放入plugins文件夹重启服务器
 #### 如果是配合BungeeCord连接多个子服使用：
-* 插件放入作为登陆服的那个子服plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin文件夹修改bungeecord.yml中的配置，然后执行重载指令
+* 插件放入作为登录服的那个子服plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin文件夹修改bungeecord.yml中的配置，然后执行重载指令
 * 复制一份插件再放入BungeeCord的plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin-Bungee文件夹，修改bungeecord.yml中的配置，然后执行重载指令
 
 </p></details>
@@ -65,34 +65,34 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 * `/bindemail re 验证码 新密码`
 * `/bdmail re 验证码 新密码`
 ### 管理指令
-### 添加登陆之前允许执行的指令 (支持正则表达式)
-* `/catseedlogin commandWhiteListAdd 指令`
-### 删除登陆之前允许执行的指令 (支持正则表达式)
-* `/catseedlogin commandWhiteListDel 指令`
-### 查看登陆之前允许执行的指令 (支持正则表达式)
-* `/catseedlogin commandWhiteListInfo`
+### 添加登录之前允许执行的指令 (支持正则表达式)
+* `/catseedlogin commandWhitelistAdd 指令`
+### 删除登录之前允许执行的指令 (支持正则表达式)
+* `/catseedlogin commandWhitelistDel 指令`
+### 查看登录之前允许执行的指令 (支持正则表达式)
+* `/catseedlogin commandWhitelistInfo`
 ### 设置相同ip注册数量限制 （默认数量2）
-* `/catseedlogin setIpRegCountLimit 数量`
+* `/catseedlogin setMaxRegPerIP 数量`
 ### 设置相同ip登录数量限制 （默认数量2）
-* `/catseedlogin setIpCountLimit 数量`
+* `/catseedlogin setMaxOnlinePerIP 数量`
 ### 设置游戏名最小和最大长度 (默认最小是2 最大是15)
-* `/catseedlogin setIdLength 最短 最长`
+* `/catseedlogin setPlayerNameLength 最短 最长`
 ### 离开服务器重新进入间隔限制 单位：tick (1秒等于20tick) (默认60tick)
-* `/catseedlogin setReenterInterval 间隔`
-### 设置玩家登陆地点为你站着的位置 (默认登陆地点为world世界的出生点)
+* `/catseedlogin setRejoinInterval 间隔`
+### 设置玩家登录地点为你站着的位置 (默认登录地点为world世界的出生点)
 * `/catseedlogin setSpawnLocation`
 ### 设置自动踢出未登录的玩家 (默认120秒，小于1秒则关闭此功能)
-* `/catseedlogin setAutoKick 秒数`
+* `/catseedlogin setLoginTimeout 秒数`
 ### 打开/关闭 限制中文游戏名 (默认打开)
-* `/catseedlogin limitChineseID`
-### 打开/关闭 登陆之前是否受到伤害 (默认登陆之前不受到伤害)
-* `/catseedlogin beforeLoginNoDamage`
-### 打开/关闭 登陆之后是否返回退出地点 (默认打开)
-* `/catseedlogin afterLoginBack`
-### 打开/关闭 登录之前是否强制在登陆地点 (默认打开)
-* `/catseedlogin canTpSpawnLocation`
+* `/catseedlogin forceStandardPlayerName`
+### 打开/关闭 登录之前是否受到伤害 (默认登录之前不受到伤害)
+* `/catseedlogin noDamageBeforeLogin`
+### 打开/关闭 登录之后是否返回退出地点 (默认打开)
+* `/catseedlogin backAfterLogin`
+### 打开/关闭 登录之前是否强制在登录地点 (默认打开)
+* `/catseedlogin noMoveBeforeLogin`
 ### 打开/关闭 死亡状态退出游戏记录退出位置 (默认打开)
-* `/catseedlogin deathStateQuitRecordLocation`
+* `/catseedlogin saveDeadPlayerLogoutLocation`
 ### 管理员强制删除账户
 * `/catseedlogin delPlayer 玩家名`
 ### 管理员强制设置玩家密码
@@ -112,36 +112,36 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 # 插件使用的语言。
 language: "zh_CN"
 # 每个IP地址可注册的账号数量。
-IpRegisterCountLimit: 2
+maxRegPerIP: 2
 # 同一个IP地址同时在线玩家的最大值。
-IpCountLimit: 2
+maxOnlinePerIP: 2
 # 只允许在玩家名中使用英文字母、数字和下划线？
 # 设定为true时，将不允许玩家名中包含其它字符的玩家加入服务器。
-LimitChineseID: true
+forceStandardPlayerName: true
 # 玩家名的最小长度。
-MinLengthID: 2
+minPlayerNameLength: 2
 # 玩家名的最大长度。
-MaxLengthID: 15
+maxPlayerNameLength: 15
 # 如果设定为true，未登录玩家将不会受到伤害。
-BeforeLoginNoDamage: true
+noDamageBeforeLogin: true
 # 玩家在下线多少秒后可以重新进入服务器？
-ReenterInterval: 60
+rejoinInterval: 60
 # 如果设定为true，玩家登录成功后将会被传送到下线位置。
-AfterLoginBack: true
+backAfterLogin: true
 # 如果设定为true，未登录玩家将不能移动。
-CanTpSpawnLocation: true
+noMoveBeforeLogin: true
 # 在登录之前可以使用的命令。
 # 默认值适合大多数情况，支持正则表达式。
-CommandWhiteList:
+commandWhitelist:
   - /(?i)l(ogin)?(\z| .*)
   - /(?i)reg(ister)?(\z| .*)
   - /(?i)resetpassword?(\z| .*)
   - /(?i)repw?(\z| .*)
   - /(?i)worldedit cui
 # 如果玩家一直没登录成功，多少秒后将会被踢出服务器？
-AutoKick: 120
+loginTimeout: 120
 # 如果设定为true，玩家死亡后不复活直接下线也会被保存下线位置。
-DeathStateQuitRecordLocation: true
+saveDeadPlayerLogoutLocation: true
 ```
 
 </p></details>
@@ -180,7 +180,7 @@ FromPersonal: "xxx服务器"
 </p></details>
 
 ## 配合BungeeCord连接多个子服
-插件可以在子服和bc端上运行，如果你是bc端连接多个子服的服务器架构，你需要在作为登陆服的那个子服和bc端都装入这个插件，并设置bungeecord.yml配置文件
+插件可以在子服和bc端上运行，如果你是bc端连接多个子服的服务器架构，你需要在作为登录服的那个子服和bc端都装入这个插件，并设置bungeecord.yml配置文件
 
 <details><summary>子服配置文件：bungeecord.yml</summary><p>
 

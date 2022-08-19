@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static cc.baka9.catseedlogin.bukkit.I18nManager.translate;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandRegister implements CommandExecutor {
 
@@ -48,7 +48,7 @@ public class CommandRegister implements CommandExecutor {
             try {
                 String currentIp = player.getAddress().getAddress().getHostAddress();
                 List<LoginPlayer> LoginPlayerListlikeByIp = CatSeedLogin.sql.getLikeByIp(currentIp);
-                if (LoginPlayerListlikeByIp.size() >= Config.Settings.IpRegisterCountLimit) {
+                if (LoginPlayerListlikeByIp.size() >= Config.Settings.maxRegPerIP) {
                     sender.sendMessage(translate("reg-accounts-limit-exceeded")
                             .replace("{count}", String.valueOf(LoginPlayerListlikeByIp.size()))
                             .replace("{accounts}", String.join(", ", LoginPlayerListlikeByIp.stream().map(LoginPlayer::getName).toArray(String[]::new))));

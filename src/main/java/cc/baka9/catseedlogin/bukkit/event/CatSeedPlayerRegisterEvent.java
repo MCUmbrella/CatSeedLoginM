@@ -21,7 +21,7 @@ public class CatSeedPlayerRegisterEvent extends Event {
     }
 
 
-    private Player player;
+    private final Player player;
 
     public Player getPlayer(){
         return player;

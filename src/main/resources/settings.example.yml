@@ -2,8 +2,8 @@
 # Every setting is explained in detail in the comments.
 # 此文件是settings.yml文件的示例，每个设置项都在注释中作了详细解释。
 
-# The language of the plugin.
-# 插件使用的语言。
+# The language of the plugin. Available: "zh_CN" (Chinese simplified), "en_US" (English)
+# 插件使用的语言。目前可用的有"zh_CN"（中文）, "en_US"（英文）
 language: "zh_CN"
 
 # How many accounts can be created per IP address?
@@ -16,8 +16,10 @@ IpCountLimit: 2
 
 # Only allow players with English alphabets, numbers, and the "_" characters in their names?
 # If true, players with other characters in their names will not be able to join the server.
+# If false, player can join the server no matter what character they use as their name.
 # 只允许在玩家名中使用英文字母、数字和下划线？
 # 设定为true时，将不允许玩家名中包含其它字符的玩家加入服务器。
+# 设定为false时，玩家不管用什么字符作为玩家名都能进入服务器。
 LimitChineseID: true
 
 # The minimum length of the player's name.

@@ -24,11 +24,11 @@ public class CommandRegister implements CommandExecutor {
         if (args.length != 2) return false;
         Player player = (Player) sender;
         String name = sender.getName();
-        if (LoginPlayerHelper.isLogin(name)) {
+        if (LoginPlayerHelper.isLoggedIn(name)) {
             sender.sendMessage(translate("reg-already-registered"));
             return true;
         }
-        if (LoginPlayerHelper.isRegister(name)) {
+        if (LoginPlayerHelper.isRegistered(name)) {
             sender.sendMessage(translate("reg-player-name-taken"));
             return true;
         }

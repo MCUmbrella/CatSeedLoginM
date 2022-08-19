@@ -31,7 +31,7 @@ public class CommandBindEmail implements CommandExecutor {
             sender.sendMessage("§c你还未注册!");
             return true;
         }
-        if (!LoginPlayerHelper.isLogin(name)) {
+        if (!LoginPlayerHelper.isLoggedIn(name)) {
             sender.sendMessage("§c你还未登陆!");
             return true;
         }

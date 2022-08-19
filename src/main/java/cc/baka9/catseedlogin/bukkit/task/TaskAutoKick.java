@@ -21,7 +21,7 @@ public class TaskAutoKick extends Task {
         long now = System.currentTimeMillis();
         for (Player player : Bukkit.getOnlinePlayers()) {
             String playerName = player.getName();
-            if (!LoginPlayerHelper.isLogin(playerName)) {
+            if (!LoginPlayerHelper.isLoggedIn(playerName)) {
                 if (playerJoinTime.containsKey(playerName)) {
                     if (now - playerJoinTime.get(playerName) > autoKickMs) {
                         player.kickPlayer(translate("login-timed-out").replace("{time}", Config.Settings.AutoKick + ""));

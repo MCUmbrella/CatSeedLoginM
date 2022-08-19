@@ -1,0 +1,43 @@
+language: "English (US)"
+language-file-version: 1
+language-file-contributor: "MCUmbrella"
+
+# /login command related
+login-already: "§cYou are already logged in!"
+login-success: "§aSuccessfully logged in!"
+login-wrong-password: "§cWrong password!"
+login-wrong-password-can-repw: "§cWrong password! You can use “/resetpassword forget” to reset your password"
+
+# /reg command related
+reg-success: "§aSuccessfully registered!"
+reg-player-name-taken: "§cYour player name has been registered. If you have never registered before, please change your player name!"
+reg-already-registered: "§aYou have already registered. If you want to change your password, use §e“/changepw (oldPassword) (newPassword) (newPasswordRepeat)”"
+reg-password-not-same: "§cThe password you entered twice does not match!"
+reg-accounts-limit-exceeded: "§cYou have already registered {count} accounts and cannot register more accounts. \nAccounts already registered: {accounts}"
+
+# /resetpassword command related
+repw-disabled: "§cThe server does not have the reset password feature enabled"
+repw-email-not-set: "§cYou have not set your email address and cannot reset your password"
+repw-email-already-sent: "§cThe authentication code has been sent to your mailbox {email}, please do not repeat this operation"
+repw-sending-email: "§6Sending verification code to email {email}..."
+repw-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox. If you didn't receive it, please check the spam folder"
+repw-success: "§aPassword reset successful!"
+repw-no-pending-request: "§cYou have no pending password reset request actions or the verification code has expired\n§6If you forgot your password and need to reset it, use “/resetpassword forget”"
+repw-invalid-code: "§cAuthentication code mismatch!"
+
+# /changepassword command related
+chpw-incorrect-old-password: "§cOld password entered incorrectly!"
+chpw-new-password-not-same: "§cThe new password entered twice is not the same!"
+chpw-success: "§aSuccessfully changed your password! Please log in again"
+
+# general / misc
+not-registered: "§cYou are not registered yet!"
+not-logged-in: "§cYou are not logged in!"
+please-wait: "§6Please wait..."
+please-register: "§eYou are not registered. Please use §a“/reg (password) (passwordRepeat)”§e to register your player name"
+please-login: "§ePlease use §a“/l (password)”§e to login to the game\n§6 If you have never registered, please change your player name"
+login-timed-out: "§cYou have not logged in within {time} seconds and have been kicked off the server"
+password-too-weak: "§cPassword must consist of numbers and letters between 6 and 16 digits"
+internal-error: "§cAn internal error occurred!"
+database-error: "§cAn error occurred while operating the database!"
+no-protocolLib: "The server does not have the ProtocolLib plugin loaded and cannot hide the inventory before the player logs in"

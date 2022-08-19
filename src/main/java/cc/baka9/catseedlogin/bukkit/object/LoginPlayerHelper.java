@@ -24,14 +24,12 @@ public class LoginPlayerHelper {
 
     public static void add(LoginPlayer lp){
         synchronized (set) {
-
             set.add(lp);
         }
     }
 
     public static void remove(LoginPlayer lp){
         synchronized (set) {
-
             set.remove(lp);
         }
     }
@@ -47,21 +45,17 @@ public class LoginPlayerHelper {
         }
     }
 
-    public static boolean isLogin(String name){
+    public static boolean isLoggedIn(String name){
         synchronized (set) {
-            for (LoginPlayer lp : set) {
-                if (lp.getName().equals(name)) {
+            for (LoginPlayer lp : set)
+                if (lp.getName().equals(name))
                     return true;
-                }
-            }
             return false;
         }
     }
 
-    public static boolean isRegister(String name){
-
+    public static boolean isRegistered(String name){
         return Cache.getIgnoreCase(name) != null;
-
     }
 
     // 记录登录IP

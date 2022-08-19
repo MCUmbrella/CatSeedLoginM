@@ -23,9 +23,9 @@ public class CatSeedPlayerLoginEvent extends Event {
         return handlers;
     }
 
-    private Player player;
-    private String email;
-    private Result result;
+    private final Player player;
+    private final String email;
+    private final Result result;
 
 
     public Player getPlayer(){

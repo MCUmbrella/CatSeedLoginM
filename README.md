@@ -4,12 +4,15 @@
 crazylogin在高版本有各种匪夷所思的bug（总之我是被crazylogin从1.13.2的版本劝退自己开始造起了登陆插件）
 authme配置文件对一些经验不足的服主配置起来极其麻烦，甚至有人从入门到弃坑
 有人测试1.7.10 和 1.11版本的服务器可以用 理论上应该支持1.7 ~ 1.18.1 一般都是低版本向上兼容。
-## 基础功能:
+## 基础功能
+
+<details><summary>点我展开</summary><p>
+
 *  注册 登录 修改密码 管理员设置密码
 *  防止英文id大小写登录bug
-*  登录前隐藏背包
-*  防止玩家登录之后,被别人顶下线
-*  下线之后 “可配置” 秒内不能重新进入服务器（防止某些bug）
+*  登录前隐藏背包（需要ProtocolLib插件）
+*  防止玩家登录之后被别人顶下线
+*  下线之后指定时长内不能重新进入服务器（防止某些bug）
 *  没有登录之前禁止移动,交互,攻击,发言,使用指令,传送,点击背包物品,丢弃物品,拾取物品
 *  限制同ip的帐号同时在线/注册的数量
 *  登录之前在配置文件指定的世界出生点,登录之后自动返回下线地点（可配置取消）
@@ -18,15 +21,24 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 *  进入游戏时游戏名的限制（由数字,字母和下划线组成 “可配置”长度的游戏名才能进入）
 *  绑定邮箱，邮箱重置密码功能
 *  支持bc端在没有登录时，禁止切换子服，登录后切换子服保持登录
+
+</p></details>
+
 ## 下载
 * 最新版 https://www.mcbbs.net/thread-847859-1-1.html
 * 旧版 https://github.com/CatSeed/CatSeedLogin/tags
 ## 使用方式
+
+<details><summary>点我展开</summary><p>
+
 #### 如果是正常使用：
 * 插件放入plugins文件夹重启服务器
 #### 如果是配合BungeeCord连接多个子服使用：
 * 插件放入作为登陆服的那个子服plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin文件夹修改bungeecord.yml中的配置，然后执行重载指令
 * 复制一份插件再放入BungeeCord的plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin-Bungee文件夹，修改bungeecord.yml中的配置，然后执行重载指令
+
+</p></details>
+
 ## 指令
 
 <details><summary>点我展开</summary><p>
@@ -201,14 +213,24 @@ AuthKey: ""
 
 ### bc端指令
 #### 重載bc端本插件的配置文件
-`/CatSeedLoginBungee reload  ` 或 `/cslb reload  `
+`/CatSeedLoginBungee reload ` 或 `/cslb reload`
 
 ## 开发者部分
+
+<details><summary>点我展开</summary><p>
+
 ### 事件
-CatSeedPlayerLoginEvent
-  
-CatSeedPlayerRegisterEvent
+- CatSeedPlayerLoginEvent：玩家登录事件
+  - `getPlayer()`: 获取触发事件的玩家的Player对象
+  - `getResult()`: 获取登录操作的结果。登录成功返回`CatSeedPlayerLoginEvent.Result.SUCCESS`，失败返回`CatSeedPlayerLoginEvent.Result.FAIL`
+- CatSeedPlayerRegisterEvent
+  - `getPlayer()`: 获取触发事件的玩家的Player对象
 ### API
-CatSeedLoginAPI
+- CatSeedLoginAPI
+  - `isLoggedIn(String)`: 从给定的玩家名判断玩家是否已登录
+  - `isRegistered(String)`: 从给定的玩家名判断玩家是否已注册
+
+</p></details>
+
 ## 联系
 [点击进入 QQ交流群839815243](http://shang.qq.com/wpa/qunwpa?idkey=91199801a9406f659c7add6fb87b03ca071b199b36687c62a3ac51bec2f258a3)

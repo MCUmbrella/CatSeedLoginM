@@ -22,7 +22,7 @@ public class CommandLogin implements CommandExecutor {
         if (args.length == 0 || !(sender instanceof Player)) return false;
         Player player = (Player) sender;
         String name = player.getName();
-        if (LoginPlayerHelper.isLogin(name)) {
+        if (LoginPlayerHelper.isLoggedIn(name)) {
             sender.sendMessage(translate("login-already"));
             return true;
         }

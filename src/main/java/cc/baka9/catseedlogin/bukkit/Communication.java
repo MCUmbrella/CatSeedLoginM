@@ -111,7 +111,7 @@ public class Communication {
     private static void handleConnectRequest(Socket socket, String playerName) {
         // 切换主线程获取是否已登录
         Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
-            boolean result = LoginPlayerHelper.isLogin(playerName);
+            boolean result = LoginPlayerHelper.isLoggedIn(playerName);
 
             // 切换异步线程返回结果
             CatSeedLogin.instance.runTaskAsync(() -> {

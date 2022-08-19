@@ -29,7 +29,7 @@ public class CommandChangePassword implements CommandExecutor {
             sender.sendMessage(translate("not-registered"));
             return true;
         }
-        if (!LoginPlayerHelper.isLogin(name)) {
+        if (!LoginPlayerHelper.isLoggedIn(name)) {
             sender.sendMessage(translate("not-logged-in"));
             return true;
         }

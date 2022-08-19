@@ -14,8 +14,8 @@ public class TaskSendLoginMessage extends Task {
     public void run(){
         if (!Cache.isLoaded) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (!LoginPlayerHelper.isLogin(player.getName())) {
-                if (!LoginPlayerHelper.isRegister(player.getName())) {
+            if (!LoginPlayerHelper.isLoggedIn(player.getName())) {
+                if (!LoginPlayerHelper.isRegistered(player.getName())) {
                     player.sendMessage(translate("please-register"));
                     continue;
                 }

@@ -28,7 +28,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
-        if (LoginPlayerHelper.isLogin(event.getPlayer().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         String input = event.getMessage().toLowerCase();
         for (Pattern regex : Config.Settings.CommandWhiteList) {
             if (regex.matcher(input).find()) return;
@@ -50,7 +50,7 @@ public class Listeners implements Listener {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "游戏名字母大小写不匹配,请使用游戏名" + lp.getName() + "重新尝试登录");
             return;
         }
-        if (LoginPlayerHelper.isLogin(name)) {
+        if (LoginPlayerHelper.isLoggedIn(name)) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "玩家 " + lp.getName() + " 已经在线了!");
         }
         int count = 0;
@@ -72,26 +72,26 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event){
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
-        if (LoginPlayerHelper.isLogin(event.getPlayer().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event){
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
-        if (LoginPlayerHelper.isLogin(event.getPlayer().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event){
-        if (LoginPlayerHelper.isLogin(event.getPlayer().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
-        if (!(event.getWhoClicked() instanceof Player) || LoginPlayerHelper.isLogin(event.getWhoClicked().getName()))
+        if (!(event.getWhoClicked() instanceof Player) || LoginPlayerHelper.isLoggedIn(event.getWhoClicked().getName()))
             return;
         event.setCancelled(true);
     }
@@ -101,7 +101,7 @@ public class Listeners implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event){
         if (!(event.getDamager() instanceof Player)) return;
         if (playerIsNotMinecraftPlayer((Player) event.getDamager())) return;
-        if (LoginPlayerHelper.isLogin(event.getDamager().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getDamager().getName())) return;
         event.setCancelled(true);
     }
 
@@ -112,7 +112,7 @@ public class Listeners implements Listener {
 
             Entity entity = event.getEntity();
             if (entity instanceof Player && !playerIsNotMinecraftPlayer((Player) entity)) {
-                if (!LoginPlayerHelper.isLogin(entity.getName())) {
+                if (!LoginPlayerHelper.isLoggedIn(entity.getName())) {
                     event.setCancelled(true);
                 }
 
@@ -126,14 +126,14 @@ public class Listeners implements Listener {
     public void onPlayerTeleport(PlayerTeleportEvent event){
         if (Config.Settings.CanTpSpawnLocation && event.getTo().equals(Config.Settings.SpawnLocation)) return;
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
-        if (LoginPlayerHelper.isLogin(event.getPlayer().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event){
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
-        if (LoginPlayerHelper.isLogin(event.getPlayer().getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         event.setCancelled(true);
     }
 
@@ -142,7 +142,7 @@ public class Listeners implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         if (playerIsNotMinecraftPlayer(player)) return;
-        if (LoginPlayerHelper.isLogin(player.getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(player.getName())) return;
         event.setCancelled(true);
     }
 
@@ -150,7 +150,7 @@ public class Listeners implements Listener {
     public void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
         if (playerIsNotMinecraftPlayer(player)) return;
-        if (LoginPlayerHelper.isLogin(player.getName())) return;
+        if (LoginPlayerHelper.isLoggedIn(player.getName())) return;
         Location from = event.getFrom();
         Location to = event.getTo();
         if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ() && from.getY() - to.getY() >= 0.0D) {
@@ -168,7 +168,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
-        if (LoginPlayerHelper.isLogin(player.getName())) {
+        if (LoginPlayerHelper.isLoggedIn(player.getName())) {
             if (!player.isDead() || Config.Settings.DeathStateQuitRecordLocation) {
                 Config.setOfflineLocation(player);
             }

@@ -49,6 +49,4 @@ public class LoginPlayer {
     public void crypt(){
         password = Crypt.encrypt(name, password);
     }
-
-
 }

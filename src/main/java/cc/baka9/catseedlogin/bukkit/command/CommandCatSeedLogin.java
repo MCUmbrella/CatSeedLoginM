@@ -308,7 +308,7 @@ public class CommandCatSeedLogin implements CommandExecutor {
     private boolean reload(CommandSender sender, String[] args){
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             Config.reload();
-            CatSeedLogin.sql = Config.MySQL.Enable ? new MySQL(CatSeedLogin.instance) : new SQLite(CatSeedLogin.instance);
+            CatSeedLogin.sql = Config.MySQL.enabled ? new MySQL(CatSeedLogin.instance) : new SQLite(CatSeedLogin.instance);
             try {
                 CatSeedLogin.sql.init();
                 Cache.refreshAll();
@@ -317,7 +317,7 @@ public class CommandCatSeedLogin implements CommandExecutor {
                 e.printStackTrace();
             }
             Communication.socketServerStopAsync();
-            if (Config.BungeeCord.Enable) {
+            if (Config.BungeeCord.enabled) {
                 Communication.socketServerStartAsync();
             }
             sender.sendMessage("配置已重载!");

@@ -162,19 +162,31 @@ MySQL:
 
 </p></details>
 
-<details><summary>重置密码邮件配置：emailVerify.yml</summary><p>
+<details><summary>重置密码邮件配置：email.yml</summary><p>
 
-如果不使用邮箱一系列功能，就请无视此配置  
+如果不使用绑定邮箱、找回密码等跟邮箱有关的功能，就请无视此配置
 ```yaml
-# 是否开启邮箱系列的功能（false = 不开启）  
-Enable: false  
-EmailAccount: "763737569@qq.com"  
-EmailPassword: "123456"  
-EmailSmtpHost: "smtp.qq.com"  
-EmailSmtpPort: "465"  
-SSLAuthVerify: true  
-# 发件人的名字  
-FromPersonal: "xxx服务器"
+# Enable the email feature? true = enable, false = disable
+# 开启邮件验证、重置密码功能？（true：开启，false：不开启）
+enabled: false
+# The user used to connect to the SMTP server
+# 连接SMTP服务器时使用的用户名
+account: "15555555555@163.com"
+# The password used to connect to the SMTP server
+# 连接SMTP服务器时使用的密码
+password: "PASSWORDPASSWORD"
+# The address of the SMTP server
+# SMTP服务的地址
+smtpHost: "smtp.163.com"
+# The port of the SMTP server. Usually 25 (no SSL), 465 and 587 (SSL)
+# SMTP服务的端口
+smtpPort: "25"
+# Enable SSL connection? true = enable
+# 启用SSL连接
+ssl: false
+# The sender of the email
+# 邮件中显示的发件人
+from: "CatSeedLoginM"
 ```
 
 </p></details>

@@ -11,17 +11,17 @@ login-wrong-password-can-repw: "§cWrong password! You can use “/resetpassword
 # /reg command related
 reg-success: "§aSuccessfully registered!"
 reg-player-name-taken: "§cYour player name has been registered. If you have never registered before, please change your player name!"
-reg-already-registered: "§aYou have already registered. If you want to change your password, use §e“/changepw (oldPassword) (newPassword) (newPasswordRepeat)”"
+reg-already-registered: "§aYou have already registered. If you want to change your password, use §e“/changepw (old password) (new password) (new password repeat)”"
 reg-password-not-same: "§cThe password you entered twice does not match!"
-reg-accounts-limit-exceeded: "§cYou have already registered {count} accounts and cannot register more accounts. \nAccounts already registered: {accounts}"
+reg-accounts-limit-exceeded: "§cYou have already registered {count} accounts and cannot register more accounts.\nAccounts already registered: {accounts}"
 
 # /resetpassword command related
 repw-disabled: "§cThe server does not have the reset password feature enabled"
 repw-email-not-set: "§cYou have not set your email address and cannot reset your password"
 repw-email-already-sent: "§cThe verification code has been sent to your mailbox {email}, please do not repeat this operation"
-repw-sending-email: "§6Sending verification code to email {email}..."
-repw-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox. If you didn't receive it, please check the spam folder"
-repw-success: "§aPassword reset successful!"
+repw-sending-email: "§6Sending verification code to {email}..."
+repw-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox.\nIf you didn't receive it, please check the spam folder"
+repw-success: "§aPassword reset successful! Please re-login"
 repw-no-pending-request: "§cYou have no pending password reset request actions or the verification code has expired\n§6If you forgot your password and need to reset it, use “/resetpassword forget”"
 repw-invalid-code: "§cVerification code mismatch!"
 
@@ -34,9 +34,9 @@ chpw-success: "§aSuccessfully changed your password! Please log in again"
 bind-disabled: "§cThe server does not have the bind mailbox feature enabled"
 bind-already: "§cYou have already bound your email!"
 bind-email-already-sent: "§cThe verification code has been sent to your mailbox {email}, please do not repeat this operation"
-bind-sending-email: "§6Sending verification code to email {email}..."
-bind-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox. If you didn't receive it, please check the spam folder"
-bind-success: "§aMailbox {email} has been successfully bound to your account\nYou can reset your password if you forget it in the future"
+bind-sending-email: "§6Sending verification code to {email}..."
+bind-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox.\nIf you didn't receive it, please check the spam folder"
+bind-success: "§aMailbox {email} has been successfully bound to your account!\nYou can reset your password if you forget it in the future"
 bind-no-pending-request: "§cYou don't have a mailbox to bind, or the verification code has expired"
 bind-invalid-code: "§cVerification code mismatch!"
 bind-invalid-email-format: "§cIncorrect email address format!"
@@ -52,3 +52,18 @@ password-too-weak: "§cPassword must consist of numbers and letters between 6 an
 internal-error: "§cAn internal error occurred!"
 database-error: "§cAn error occurred while operating the database!"
 no-protocolLib: "The server does not have the ProtocolLib plugin loaded and cannot hide the inventory before the player logs in"
+
+# email
+bind-email-subject: "Verification Code (Binding Email)"
+bind-email-content: >-
+  <center><h1>Verification code:<br/>
+  {code}</h1></center><br/>
+  Log into the server as <i>{name}</i> and type <u><i>/bindemail verify {code}</i></u> to bind your email address.<br/>
+  After binding, you can reset your password if you forget it.<br/>
+  This code is valid for <b>{time} minutes</b>
+repw-email-subject: "Verification Code (Resetting Password)"
+repw-email-content: >-
+  <center><h1>Verification code:<br/>
+  {code}</h1></center><br/>
+  Log into the server as <i>{name}</i> and type <u><i>/resetpassword re {code} (new password)</i></u> to reset your password.<br/>
+  This code is valid for <b>{time} minutes</b>

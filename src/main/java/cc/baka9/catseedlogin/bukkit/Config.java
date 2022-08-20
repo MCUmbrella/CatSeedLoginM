@@ -15,12 +15,10 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static vip.floatationdevice.msu.I18nUtil.translate;
-
 /**
  * 加载/保存/重载 yml配置文件
  * config.yml 玩家退出服务器的位置
- * emailVerify.yml 邮箱找回密码
+ * email.yml 邮箱找回密码
  * settings.yml 设置
  * sql.yml 数据库
  */
@@ -32,37 +30,37 @@ public class Config {
      * 数据库
      */
     public static class MySQL { //TODO
-        public static boolean Enable;
-        public static String Host;
-        public static String Port;
-        public static String Database;
-        public static String User;
-        public static String Password;
+        public static boolean enabled;
+        public static String host;
+        public static String port;
+        public static String database;
+        public static String user;
+        public static String password;
 
         public static void load(){
             FileConfiguration config = getConfig("sql.yml");
-            MySQL.Enable = config.getBoolean("MySQL.Enable");
-            MySQL.Host = config.getString("MySQL.Host");
-            MySQL.Port = config.getString("MySQL.Port");
-            MySQL.Database = config.getString("MySQL.Database");
-            MySQL.User = config.getString("MySQL.User");
-            MySQL.Password = config.getString("MySQL.Password");
+            MySQL.enabled = config.getBoolean("MySQL.Enable");
+            MySQL.host = config.getString("MySQL.Host");
+            MySQL.port = config.getString("MySQL.Port");
+            MySQL.database = config.getString("MySQL.Database");
+            MySQL.user = config.getString("MySQL.User");
+            MySQL.password = config.getString("MySQL.Password");
         }
     }
 
     public static class BungeeCord { //TODO
-        public static boolean Enable;
-        public static String Host;
-        public static String Port;
-        public static String AuthKey;
+        public static boolean enabled;
+        public static String host;
+        public static String port;
+        public static String authKey;
 
         public static void load(){
 
             FileConfiguration config = getConfig("bungeecord.yml");
-            BungeeCord.Enable = config.getBoolean("Enable");
-            BungeeCord.Host = config.getString("Host");
-            BungeeCord.Port = config.getString("Port");
-            BungeeCord.AuthKey = config.getString("AuthKey");
+            BungeeCord.enabled = config.getBoolean("Enable");
+            BungeeCord.host = config.getString("Host");
+            BungeeCord.port = config.getString("Port");
+            BungeeCord.authKey = config.getString("AuthKey");
         }
     }
 
@@ -144,25 +142,24 @@ public class Config {
      */
     public static class EmailVerify { //TODO
 
-        public static boolean Enable;
-        public static String EmailAccount;
-        public static String EmailPassword;
-        public static String EmailSmtpHost;
-        public static String EmailSmtpPort;
-        public static boolean SSLAuthVerify;
-        public static String FromPersonal;
+        public static boolean enabled;
+        public static String account;
+        public static String password;
+        public static String smtpHost;
+        public static String smtpPort;
+        public static boolean ssl;
+        public static String from;
 
 
         public static void load(){
-            FileConfiguration config = getConfig("emailVerify.yml");
-            Enable = config.getBoolean("Enable");
-            EmailAccount = config.getString("EmailAccount");
-            EmailPassword = config.getString("EmailPassword");
-            EmailSmtpHost = config.getString("EmailSmtpHost");
-            EmailSmtpPort = config.getString("EmailSmtpPort");
-            SSLAuthVerify = config.getBoolean("SSLAuthVerify");
-            FromPersonal = config.getString("FromPersonal");
-
+            FileConfiguration config = getConfig("email.yml");
+            enabled = config.getBoolean("enabled");
+            account = config.getString("account");
+            password = config.getString("password");
+            smtpHost = config.getString("smtpHost");
+            smtpPort = config.getString("smtpPort");
+            ssl = config.getBoolean("ssl");
+            from = config.getString("from");
         }
 
     }

@@ -18,7 +18,6 @@ import java.util.Optional;
 
 import static vip.floatationdevice.msu.I18nUtil.translate;
 
-
 public class CommandBindEmail implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args){
@@ -35,7 +34,7 @@ public class CommandBindEmail implements CommandExecutor {
             sender.sendMessage(translate("not-logged-in"));
             return true;
         }
-        if (!Config.EmailVerify.Enable) {
+        if (!Config.EmailVerify.enabled) {
             sender.sendMessage(translate("bind-disabled"));
             return true;
         }
@@ -52,14 +51,15 @@ public class CommandBindEmail implements CommandExecutor {
                 else if (Util.checkMail(mail)) {
                     //创建有效期为20分钟的验证码
                     EmailCode bindEmail = EmailCode.create(name, mail, 1000 * 60 * 20, EmailCode.Type.Bind);
-                    sender.sendMessage(translate("bind-sending-email"));
+                    sender.sendMessage(translate("bind-sending-email").replace("{email}", mail));
                     CatSeedLogin.instance.runTaskAsync(() -> {
-                        try { //TODO: i18n for the email content
-                            Mail.sendMail(mail, "邮箱绑定",
-                                    "你的验证码是 <strong>" + bindEmail.getCode() + "</strong>" +
-                                            "<br/>在服务器中使用帐号 " + name + " 输入指令<strong>/bindemail verify " + bindEmail.getCode() + "</strong> 来绑定邮箱" +
-                                            "<br/>绑定邮箱之后可用于忘记密码时重置自己的密码" +
-                                            "<br/>此验证码有效期为 " + (bindEmail.getDurability() / (1000 * 60)) + "分钟");
+                        try {
+                            Mail.sendMail(mail, translate("bind-email-subject"),
+                                    translate("bind-email-content")
+                                            .replace("{code}", bindEmail.getCode())
+                                            .replace("{name}", name)
+                                            .replace("{time}", String.valueOf((bindEmail.getDurability() / (1000 * 60))))
+                            );
                             Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> sender.sendMessage(translate("bind-email-sent").replace("{email}", mail)));
                         } catch (Exception e) {
                             Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> sender.sendMessage(translate("internal-error")));
@@ -95,8 +95,8 @@ public class CommandBindEmail implements CommandExecutor {
                                     }
                                 });
                             } catch (Exception e) {
-                                e.printStackTrace();
                                 sender.sendMessage(translate("internal-error"));
+                                e.printStackTrace();
                             }
                         });
                     } else {

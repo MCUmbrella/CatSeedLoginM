@@ -40,7 +40,7 @@ public class CatSeedLogin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        sql = Config.MySQL.Enable ? new MySQL(this) : new SQLite(this);
+        sql = Config.MySQL.enabled ? new MySQL(this) : new SQLite(this);
         try {
             sql.init();
             Cache.refreshAll();
@@ -63,7 +63,7 @@ public class CatSeedLogin extends JavaPlugin {
         }
 
         // bc
-        if (Config.BungeeCord.Enable) {
+        if (Config.BungeeCord.enabled) {
             Communication.socketServerStartAsync();
         }
 

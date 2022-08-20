@@ -20,20 +20,20 @@ public class Mail {
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.smtp.host", Config.EmailVerify.EmailSmtpHost);
+        props.setProperty("mail.smtp.host", Config.EmailVerify.smtpHost);
         props.setProperty("mail.smtp.auth", "true");
 
-        final String smtpPort = Config.EmailVerify.EmailSmtpPort;
+        final String smtpPort = Config.EmailVerify.smtpPort;
         props.setProperty("mail.smtp.port", smtpPort);
 
-        if (Config.EmailVerify.SSLAuthVerify) {
+        if (Config.EmailVerify.ssl) {
             props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             props.setProperty("mail.smtp.socketFactory.fallback", "false");
             props.setProperty("mail.smtp.socketFactory.port", smtpPort);
         }
 
-        String emailAccount = Config.EmailVerify.EmailAccount;
-        String emailPassword = Config.EmailVerify.EmailPassword;
+        String emailAccount = Config.EmailVerify.account;
+        String emailPassword = Config.EmailVerify.password;
 
         Session session = Session.getInstance(props);
 
@@ -42,7 +42,7 @@ public class Mail {
 
         // 创建邮件
         MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(emailAccount, Config.EmailVerify.FromPersonal, "UTF-8"));
+        message.setFrom(new InternetAddress(emailAccount, Config.EmailVerify.from, "UTF-8"));
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMailAccount, "", "UTF-8"));
         message.setSubject(subject, "UTF-8");
         message.setContent(content, Util.isOSLinux() ? "text/html; charset=UTF-8" : "text/html; charset=GBK");

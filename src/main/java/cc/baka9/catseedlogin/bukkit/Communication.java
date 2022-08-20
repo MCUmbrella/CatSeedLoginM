@@ -48,8 +48,8 @@ public class Communication {
      */
     private static void socketServerStart() {
         try {
-            InetAddress inetAddress = InetAddress.getByName(Config.BungeeCord.Host);
-            serverSocket = new ServerSocket(Integer.parseInt(Config.BungeeCord.Port), 50, inetAddress);
+            InetAddress inetAddress = InetAddress.getByName(Config.BungeeCord.host);
+            serverSocket = new ServerSocket(Integer.parseInt(Config.BungeeCord.port), 50, inetAddress);
             while (!serverSocket.isClosed()) {
                 Socket socket;
                 try {
@@ -92,7 +92,7 @@ public class Communication {
     private static void handleKeepLoggedInRequest(String playerName, String time, String sign) {
         // 验证请求的合法性
         // 对比玩家名，时间戳，和authKey加密的结果（加密是因为如果登录服不在内网环境下，则可能会被人使用这个功能给发包来直接绕过登录）
-        if (CommunicationAuth.encryption(playerName, time, Config.BungeeCord.AuthKey).equals(sign)) {
+        if (CommunicationAuth.encryption(playerName, time, Config.BungeeCord.authKey).equals(sign)) {
             // 切换主线程给予登录状态
             Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
                 LoginPlayer lp = Cache.getIgnoreCase(playerName);

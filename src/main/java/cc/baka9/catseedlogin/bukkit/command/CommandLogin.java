@@ -45,7 +45,7 @@ public class CommandLogin implements CommandExecutor {
             sender.sendMessage(translate("login-wrong-password"));
             CatSeedPlayerLoginEvent loginEvent = new CatSeedPlayerLoginEvent(player, lp.getEmail(), CatSeedPlayerLoginEvent.Result.FAIL);
             Bukkit.getServer().getPluginManager().callEvent(loginEvent);
-            if (Config.EmailVerify.Enable) {
+            if (Config.EmailVerify.enabled) {
                 sender.sendMessage(translate("login-wrong-password-can-repw"));
             }
         }

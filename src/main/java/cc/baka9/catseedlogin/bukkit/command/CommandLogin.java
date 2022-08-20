@@ -5,7 +5,7 @@ import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.event.CatSeedPlayerLoginEvent;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
-import cc.baka9.catseedlogin.util.Crypt;
+import cc.baka9.catseedlogin.util.CryptUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,7 +31,7 @@ public class CommandLogin implements CommandExecutor {
             sender.sendMessage(translate("not-registered"));
             return true;
         }
-        if (Objects.equals(Crypt.encrypt(name, args[0]), lp.getPassword().trim())) {
+        if (Objects.equals(CryptUtil.encrypt(name, args[0]), lp.getPassword().trim())) {
             LoginPlayerHelper.add(lp);
             CatSeedPlayerLoginEvent loginEvent = new CatSeedPlayerLoginEvent(player, lp.getEmail(), CatSeedPlayerLoginEvent.Result.SUCCESS);
             Bukkit.getServer().getPluginManager().callEvent(loginEvent);

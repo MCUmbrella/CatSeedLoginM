@@ -1,6 +1,6 @@
 package cc.baka9.catseedlogin.bukkit.object;
 
-import cc.baka9.catseedlogin.util.Crypt;
+import cc.baka9.catseedlogin.util.CryptUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -47,6 +47,6 @@ public class LoginPlayer {
     }
 
     public void crypt(){
-        password = Crypt.encrypt(name, password);
+        password = CryptUtil.encrypt(name, password);
     }
 }

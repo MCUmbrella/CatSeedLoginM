@@ -6,8 +6,8 @@ import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.object.EmailCode;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
-import cc.baka9.catseedlogin.util.Mail;
-import cc.baka9.catseedlogin.util.Util;
+import cc.baka9.catseedlogin.util.MailUtil;
+import cc.baka9.catseedlogin.util.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -48,7 +48,7 @@ public class CommandResetPassword implements CommandExecutor {
                     sender.sendMessage(translate("repw-sending-email").replace("{email}", lp.getEmail()));
                     CatSeedLogin.instance.runTaskAsync(() -> {
                         try {
-                            Mail.sendMail(emailCode.getEmail(), translate("repw-email-subject"),
+                            MailUtil.sendMail(emailCode.getEmail(), translate("repw-email-subject"),
                                     translate("repw-email-content")
                                             .replace("{code}", emailCode.getCode())
                                             .replace("{name}", name)
@@ -76,7 +76,7 @@ public class CommandResetPassword implements CommandExecutor {
                     String code = args[1], pwd = args[2];
 
                     if (emailCode.getCode().equals(code)) {
-                        if (!Util.passwordIsDifficulty(pwd)) {
+                        if (!CommonUtil.isStrongPassword(pwd)) {
                             sender.sendMessage(translate("password-too-weak"));
                             return true;
                         }

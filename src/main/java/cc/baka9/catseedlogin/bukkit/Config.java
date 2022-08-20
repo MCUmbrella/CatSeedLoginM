@@ -147,7 +147,7 @@ public class Config {
         public static String password;
         public static String smtpHost;
         public static String smtpPort;
-        public static boolean ssl;
+        public static boolean sslEnabled;
         public static String from;
         public static boolean debug = false;
 
@@ -159,7 +159,7 @@ public class Config {
             password = config.getString("password");
             smtpHost = config.getString("smtpHost");
             smtpPort = config.getString("smtpPort");
-            ssl = config.getBoolean("ssl");
+            sslEnabled = config.getBoolean("ssl");
             from = config.getString("from");
             debug = config.getBoolean("debug", false);
         }

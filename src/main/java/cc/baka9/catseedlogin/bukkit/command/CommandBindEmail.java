@@ -6,8 +6,8 @@ import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.object.EmailCode;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
-import cc.baka9.catseedlogin.util.Mail;
-import cc.baka9.catseedlogin.util.Util;
+import cc.baka9.catseedlogin.util.MailUtil;
+import cc.baka9.catseedlogin.util.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -41,20 +41,20 @@ public class CommandBindEmail implements CommandExecutor {
 
         // command set email
         if (args[0].equalsIgnoreCase("set") && args.length > 1) {
-            if (lp.getEmail() != null && Util.checkMail(lp.getEmail()))
+            if (lp.getEmail() != null && CommonUtil.isEmailAddress(lp.getEmail()))
                 sender.sendMessage(translate("bind-already"));
             else {
                 String mail = args[1];
                 Optional<EmailCode> bindEmailOptional = EmailCode.getByName(name, EmailCode.Type.Bind);
                 if (bindEmailOptional.isPresent() && bindEmailOptional.get().getEmail().equals(mail))
                     sender.sendMessage(translate("bind-email-already-sent").replace("{email}", mail));
-                else if (Util.checkMail(mail)) {
+                else if (CommonUtil.isEmailAddress(mail)) {
                     //创建有效期为20分钟的验证码
                     EmailCode bindEmail = EmailCode.create(name, mail, 1000 * 60 * 20, EmailCode.Type.Bind);
                     sender.sendMessage(translate("bind-sending-email").replace("{email}", mail));
                     CatSeedLogin.instance.runTaskAsync(() -> {
                         try {
-                            Mail.sendMail(mail, translate("bind-email-subject"),
+                            MailUtil.sendMail(mail, translate("bind-email-subject"),
                                     translate("bind-email-content")
                                             .replace("{code}", bindEmail.getCode())
                                             .replace("{name}", name)
@@ -74,7 +74,7 @@ public class CommandBindEmail implements CommandExecutor {
 
         // command verify code
         if (args[0].equalsIgnoreCase("verify") && args.length > 1) {
-            if (lp.getEmail() != null && Util.checkMail(lp.getEmail())) {
+            if (lp.getEmail() != null && CommonUtil.isEmailAddress(lp.getEmail())) {
                 sender.sendMessage(translate("bind-already"));
             } else {
                 Optional<EmailCode> emailOptional = EmailCode.getByName(name, EmailCode.Type.Bind);

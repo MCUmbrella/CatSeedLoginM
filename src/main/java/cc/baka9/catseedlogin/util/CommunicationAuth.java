@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class CommunicationAuth {
-
     public static String encryption(String... args) {
         String paramString = String.join("", args);
         try {
@@ -24,5 +23,4 @@ public class CommunicationAuth {
             return null;
         }
     }
-
 }

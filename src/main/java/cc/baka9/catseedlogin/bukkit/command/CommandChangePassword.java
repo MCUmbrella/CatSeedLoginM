@@ -5,8 +5,8 @@ import cc.baka9.catseedlogin.bukkit.Config;
 import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
-import cc.baka9.catseedlogin.util.Crypt;
-import cc.baka9.catseedlogin.util.Util;
+import cc.baka9.catseedlogin.util.CryptUtil;
+import cc.baka9.catseedlogin.util.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +33,7 @@ public class CommandChangePassword implements CommandExecutor {
             sender.sendMessage(translate("not-logged-in"));
             return true;
         }
-        if (!Objects.equals(Crypt.encrypt(name, args[0]), lp.getPassword().trim())) {
+        if (!Objects.equals(CryptUtil.encrypt(name, args[0]), lp.getPassword().trim())) {
             sender.sendMessage(translate("chpw-incorrect-old-password"));
             return true;
 
@@ -42,7 +42,7 @@ public class CommandChangePassword implements CommandExecutor {
             sender.sendMessage(translate("chpw-new-password-not-same"));
             return true;
         }
-        if (!Util.passwordIsDifficulty(args[1])) {
+        if (!CommonUtil.isStrongPassword(args[1])) {
             sender.sendMessage(translate("password-too-weak"));
             return true;
         }

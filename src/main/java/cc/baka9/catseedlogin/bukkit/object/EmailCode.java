@@ -1,6 +1,6 @@
 package cc.baka9.catseedlogin.bukkit.object;
 
-import cc.baka9.catseedlogin.util.Util;
+import cc.baka9.catseedlogin.util.CommonUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +31,7 @@ public class EmailCode {
         this.email = email;
         this.durability = durability;
         this.createTime = System.currentTimeMillis();
-        this.code = Util.randomStr();
+        this.code = CommonUtil.genVerifCode();
     }
 
     public static EmailCode create(String name, String email, long durability, Type type){

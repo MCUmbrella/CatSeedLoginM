@@ -8,7 +8,7 @@ import cc.baka9.catseedlogin.bukkit.database.MySQL;
 import cc.baka9.catseedlogin.bukkit.database.SQLite;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
-import cc.baka9.catseedlogin.util.Util;
+import cc.baka9.catseedlogin.util.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -257,7 +257,7 @@ public class CommandCatSeedLogin implements CommandExecutor {
         if (args.length > 2 && args[0].equalsIgnoreCase("setpwd")) {
 
             String name = args[1], pwd = args[2];
-            if (!Util.passwordIsDifficulty(pwd)) {
+            if (!CommonUtil.isStrongPassword(pwd)) {
                 sender.sendMessage("§c密码必须是6~16位之间的数字和字母组成");
                 return true;
             }

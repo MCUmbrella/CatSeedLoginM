@@ -10,7 +10,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
-public class Mail {
+public class MailUtil
+{
 
     public static void sendMail(String receiveMailAccount, String subject, String content) throws Exception{
 
@@ -22,7 +23,7 @@ public class Mail {
         final String smtpPort = Config.EmailVerify.smtpPort;
         props.setProperty("mail.smtp.port", smtpPort);
 
-        if (Config.EmailVerify.ssl) {
+        if (Config.EmailVerify.sslEnabled) {
             props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             props.setProperty("mail.smtp.socketFactory.fallback", "false");
             props.setProperty("mail.smtp.socketFactory.port", smtpPort);
@@ -30,9 +31,7 @@ public class Mail {
 
         String emailAccount = Config.EmailVerify.account;
         String emailPassword = Config.EmailVerify.password;
-
         Session session = Session.getInstance(props);
-
         session.setDebug(Config.EmailVerify.debug);
 
         // 创建邮件
@@ -40,7 +39,7 @@ public class Mail {
         message.setFrom(new InternetAddress(emailAccount, Config.EmailVerify.from, "UTF-8"));
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMailAccount, "", "UTF-8"));
         message.setSubject(subject, "UTF-8");
-        message.setContent(content, Util.isOSLinux() ? "text/html; charset=UTF-8" : "text/html; charset=GBK");
+        message.setContent(content, "text/html; charset=UTF-8");
         message.setSentDate(new Date());
         message.saveChanges();
 

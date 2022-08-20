@@ -6,7 +6,7 @@ import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.event.CatSeedPlayerRegisterEvent;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
-import cc.baka9.catseedlogin.util.Util;
+import cc.baka9.catseedlogin.util.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +36,7 @@ public class CommandRegister implements CommandExecutor {
             sender.sendMessage(translate("reg-password-not-same"));
             return true;
         }
-        if (!Util.passwordIsDifficulty(args[0])) {
+        if (!CommonUtil.isStrongPassword(args[0])) {
             sender.sendMessage(translate("password-too-weak"));
             return true;
         }

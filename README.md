@@ -40,6 +40,7 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 </p></details>
 
 ## 下载
+* 自动构建版 https://github.com/MCUmbrella/CatSeedLoginM/actions/workflows/maven.yml
 * 最新版 https://www.mcbbs.net/thread-847859-1-1.html
 * 旧版 https://github.com/CatSeed/CatSeedLogin/tags
 ## 使用方式

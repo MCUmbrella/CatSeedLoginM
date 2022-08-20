@@ -140,7 +140,7 @@ public class Config {
     /**
      * 邮箱找回密码
      */
-    public static class EmailVerify { //TODO
+    public static class EmailVerify {
 
         public static boolean enabled;
         public static String account;
@@ -149,6 +149,7 @@ public class Config {
         public static String smtpPort;
         public static boolean ssl;
         public static String from;
+        public static boolean debug = false;
 
 
         public static void load(){
@@ -160,6 +161,7 @@ public class Config {
             smtpPort = config.getString("smtpPort");
             ssl = config.getBoolean("ssl");
             from = config.getString("from");
+            debug = config.getBoolean("debug", false);
         }
 
     }

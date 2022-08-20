@@ -12,10 +12,6 @@ import java.util.Properties;
 
 public class Mail {
 
-    private Mail(){
-    }
-
-
     public static void sendMail(String receiveMailAccount, String subject, String content) throws Exception{
 
         Properties props = new Properties();
@@ -37,8 +33,7 @@ public class Mail {
 
         Session session = Session.getInstance(props);
 
-        // 设置为debug模式, 查看详细的发送 log
-        session.setDebug(true);
+        session.setDebug(Config.EmailVerify.debug);
 
         // 创建邮件
         MimeMessage message = new MimeMessage(session);
@@ -54,7 +49,5 @@ public class Mail {
         transport.connect(emailAccount, emailPassword);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
-
     }
-
 }

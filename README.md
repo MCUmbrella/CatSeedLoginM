@@ -187,6 +187,9 @@ ssl: false
 # The sender of the email
 # 邮件中显示的发件人
 from: "CatSeedLoginM"
+# Enable debug mode? It will spam your console
+# 启用调试输出
+debug: false
 ```
 
 </p></details>

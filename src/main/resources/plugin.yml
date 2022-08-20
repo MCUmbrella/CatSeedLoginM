@@ -1,6 +1,6 @@
 name: CatSeedLogin
 main: cc.baka9.catseedlogin.bukkit.CatSeedLogin
-author: CatSeed
+author: [CatSeed, MCUmbrella]
 version: ${version}
 softdepend: [Multiverse-Core, Citizens, Essentials, EssentialsSpawn, ProtocolLib]
 api-version: 1.13
@@ -15,15 +15,13 @@ commands:
     aliases: [reg]
   bindemail:
     description: 绑定邮箱,重置密码
-    usage:
-      |
+    usage: |
       /<command> set 邮箱
       /<command> verify 验证码
     aliases: [bdmail]
   resetpassword:
     description: 忘记密码,重置密码
-    usage:
-      |
+    usage: |
       /<command> forget
       /<command> re 验证码 新密码
     aliases: [repw]
@@ -33,17 +31,16 @@ commands:
     aliases: [changepw]
   catseedlogin:
     description: 管理员管理指令
-    usage:
-      |
+    usage: |
       §d§lCatSeedLogin 管理指令:
       §a/<command> commandWhitelistAdd [指令] §9添加登录之前允许执行的指令 (支持正则表达式)
       §a/<command> commandWhitelistDel [指令] §9删除登录之前允许执行的指令 (支持正则表达式)
       §a/<command> commandWhitelistInfo §9查看登录之前允许执行的指令 (支持正则表达式)
-      §b/<command> setIpRegCountLimit [数量] §9设置相同ip注册限制 （默认数量2）
-      §b/<command> setmaxOnlinePerIP [数量] §9设置相同ip登录限制 （默认数量2）
-      §b/<command> setIdLength [最短] [最长] §9设置游戏名最小和最大长度 (默认最小是2 最大是15)
-      §b/<command> setrejoinInterval [间隔] §9离开服务器重新进入间隔限制 单位：tick (1秒等于20tick) (默认60tick)
-      §b/<command> setloginTimeout [秒数] §9设置自动踢出未登录的玩家 (默认120秒，小于1秒则关闭此功能)
+      §b/<command> setMaxRegPerIP [数量] §9设置相同ip注册限制 （默认数量2）
+      §b/<command> setMaxOnlinePerIP [数量] §9设置相同ip登录限制 （默认数量2）
+      §b/<command> setPlayerNameLength [最短] [最长] §9设置游戏名最小和最大长度 (默认最小是2 最大是15)
+      §b/<command> setRejoinInterval [间隔] §9离开服务器重新进入间隔限制 单位：tick (1秒等于20tick) (默认60tick)
+      §b/<command> setLoginTimeout [秒数] §9设置自动踢出未登录的玩家 (默认120秒，小于1秒则关闭此功能)
       §b/<command> setSpawnLocation §9设置玩家登录地点为你站着的位置 (默认登录地点为world世界的出生点)
       §c/<command> forceStandardPlayerName  §9打开/关闭 限制中文游戏名 (默认打开)
       §c/<command> noDamageBeforeLogin §9打开/关闭 登录之前是否受到伤害 (默认登录之前不受到伤害)

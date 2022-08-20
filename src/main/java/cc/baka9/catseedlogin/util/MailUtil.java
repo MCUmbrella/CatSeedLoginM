@@ -12,9 +12,7 @@ import java.util.Properties;
 
 public class MailUtil
 {
-
     public static void sendMail(String receiveMailAccount, String subject, String content) throws Exception{
-
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.smtp.host", Config.EmailVerify.smtpHost);

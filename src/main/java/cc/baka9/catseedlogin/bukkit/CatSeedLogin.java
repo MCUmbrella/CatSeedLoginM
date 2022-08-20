@@ -27,8 +27,7 @@ public class CatSeedLogin extends JavaPlugin {
 
     @Override
     public void onEnable(){
-        getLogger().info("CatSeedLogin version " + getDescription().getVersion());
-        getLogger().info("Modified by MCUmbrella");
+        getLogger().info("Modified by MCUmbrella: https://github.com/MCUmbrella/CatSeedLoginM");
         instance = this;
         //Config
         try {

@@ -18,17 +18,28 @@ reg-accounts-limit-exceeded: "§cYou have already registered {count} accounts an
 # /resetpassword command related
 repw-disabled: "§cThe server does not have the reset password feature enabled"
 repw-email-not-set: "§cYou have not set your email address and cannot reset your password"
-repw-email-already-sent: "§cThe authentication code has been sent to your mailbox {email}, please do not repeat this operation"
+repw-email-already-sent: "§cThe verification code has been sent to your mailbox {email}, please do not repeat this operation"
 repw-sending-email: "§6Sending verification code to email {email}..."
 repw-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox. If you didn't receive it, please check the spam folder"
 repw-success: "§aPassword reset successful!"
 repw-no-pending-request: "§cYou have no pending password reset request actions or the verification code has expired\n§6If you forgot your password and need to reset it, use “/resetpassword forget”"
-repw-invalid-code: "§cAuthentication code mismatch!"
+repw-invalid-code: "§cVerification code mismatch!"
 
 # /changepassword command related
 chpw-incorrect-old-password: "§cOld password entered incorrectly!"
 chpw-new-password-not-same: "§cThe new password entered twice is not the same!"
 chpw-success: "§aSuccessfully changed your password! Please log in again"
+
+# /bindemail command related
+bind-disabled: "§cThe server does not have the bind mailbox feature enabled"
+bind-already: "§cYou have already bound your email!"
+bind-email-already-sent: "§cThe verification code has been sent to your mailbox {email}, please do not repeat this operation"
+bind-sending-email: "§6Sending verification code to email {email}..."
+bind-email-sent: "§aA verification code has been sent to {email}, please check the inbox of your mailbox. If you didn't receive it, please check the spam folder"
+bind-success: "§aMailbox {email} has been successfully bound to your account\nYou can reset your password if you forget it in the future"
+bind-no-pending-request: "§cYou don't have a mailbox to bind, or the verification code has expired"
+bind-invalid-code: "§cVerification code mismatch!"
+bind-invalid-email-format: "§cIncorrect email address format!"
 
 # general / misc
 not-registered: "§cYou are not registered yet!"

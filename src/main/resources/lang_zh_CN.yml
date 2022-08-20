@@ -30,6 +30,17 @@ chpw-incorrect-old-password: "§c旧密码输入错误！"
 chpw-new-password-not-same: "§c两次输入的新密码不一样！"
 chpw-success: "§a修改成功，请重新登录"
 
+# 绑定邮箱相关
+bind-disabled: "§c服务器没有开启绑定邮箱功能"
+bind-already: "§c你已经绑定过邮箱了！"
+bind-email-already-sent: "§c已经向 {email} 邮箱中发送了验证码，请不要重复此操作"
+bind-sending-email: "§6向邮箱 {email} 发送验证码中..."
+bind-email-sent: "§a已经向邮箱 {email} 发送了一个验证码，请检查你的邮箱的收件箱。如果未收到，请检查邮箱的垃圾箱！"
+bind-success: "§a邮箱 {email} 已成功绑定到你的账号\n忘记密码时可以用邮箱重置自己的密码"
+bind-no-pending-request: "§c你没有待绑定的邮箱，或者验证码已过期"
+bind-invalid-code: "§c验证码错误！"
+bind-invalid-email-format: "§c邮箱格式不正确！"
+
 # 通用 / 其它
 not-registered: "§c你还没有注册！"
 not-logged-in: "§c你还没有登录！"

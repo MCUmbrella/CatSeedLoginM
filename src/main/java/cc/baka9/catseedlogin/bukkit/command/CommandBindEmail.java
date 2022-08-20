@@ -19,7 +19,7 @@ import java.util.Optional;
 import static vip.floatationdevice.msu.I18nUtil.translate;
 
 
-public class CommandBindEmail implements CommandExecutor { //TODO: i18n
+public class CommandBindEmail implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args){
         if (args.length == 0 || !(sender instanceof Player)) return false;
@@ -36,42 +36,38 @@ public class CommandBindEmail implements CommandExecutor { //TODO: i18n
             return true;
         }
         if (!Config.EmailVerify.Enable) {
-            sender.sendMessage("§c服务器没有开启邮箱功能");
+            sender.sendMessage(translate("bind-disabled"));
             return true;
         }
 
         // command set email
         if (args[0].equalsIgnoreCase("set") && args.length > 1) {
-            if (lp.getEmail() != null && Util.checkMail(lp.getEmail())) {
-                sender.sendMessage("§c你已经绑定过邮箱了!");
-            } else {
+            if (lp.getEmail() != null && Util.checkMail(lp.getEmail()))
+                sender.sendMessage(translate("bind-already"));
+            else {
                 String mail = args[1];
                 Optional<EmailCode> bindEmailOptional = EmailCode.getByName(name, EmailCode.Type.Bind);
-                if (bindEmailOptional.isPresent() && bindEmailOptional.get().getEmail().equals(mail)) {
-                    sender.sendMessage("§c已经向 " + mail + " 邮箱中发送验证码，请不要重复此操作");
-                } else if (Util.checkMail(mail)) {
+                if (bindEmailOptional.isPresent() && bindEmailOptional.get().getEmail().equals(mail))
+                    sender.sendMessage(translate("bind-email-already-sent").replace("{email}", mail));
+                else if (Util.checkMail(mail)) {
                     //创建有效期为20分钟的验证码
                     EmailCode bindEmail = EmailCode.create(name, mail, 1000 * 60 * 20, EmailCode.Type.Bind);
-                    sender.sendMessage("§6向邮箱发送验证码中...");
+                    sender.sendMessage(translate("bind-sending-email"));
                     CatSeedLogin.instance.runTaskAsync(() -> {
-                        try {
+                        try { //TODO: i18n for the email content
                             Mail.sendMail(mail, "邮箱绑定",
                                     "你的验证码是 <strong>" + bindEmail.getCode() + "</strong>" +
                                             "<br/>在服务器中使用帐号 " + name + " 输入指令<strong>/bindemail verify " + bindEmail.getCode() + "</strong> 来绑定邮箱" +
                                             "<br/>绑定邮箱之后可用于忘记密码时重置自己的密码" +
                                             "<br/>此验证码有效期为 " + (bindEmail.getDurability() / (1000 * 60)) + "分钟");
-                            Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
-                                sender.sendMessage("§6已经向邮箱 " + mail + " 发送了一串绑定验证码，请检查你的邮箱的收件箱");
-                                sender.sendMessage("§c如果未收到，请检查邮箱的垃圾箱!");
-                            });
+                            Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> sender.sendMessage(translate("bind-email-sent").replace("{email}", mail)));
                         } catch (Exception e) {
-                            Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> sender.sendMessage("§c发送邮件失败,服务器内部错误!"));
+                            Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> sender.sendMessage(translate("internal-error")));
                             e.printStackTrace();
                         }
                     });
-                } else {
-                    sender.sendMessage("§c邮箱格式不正确!");
-                }
+                } else
+                    sender.sendMessage(translate("bind-invalid-email-format"));
             }
             return true;
         }
@@ -79,7 +75,7 @@ public class CommandBindEmail implements CommandExecutor { //TODO: i18n
         // command verify code
         if (args[0].equalsIgnoreCase("verify") && args.length > 1) {
             if (lp.getEmail() != null && Util.checkMail(lp.getEmail())) {
-                sender.sendMessage("§c你已经绑定过邮箱了!");
+                sender.sendMessage(translate("bind-already"));
             } else {
                 Optional<EmailCode> emailOptional = EmailCode.getByName(name, EmailCode.Type.Bind);
                 if (emailOptional.isPresent()) {
@@ -94,7 +90,7 @@ public class CommandBindEmail implements CommandExecutor { //TODO: i18n
                                 Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
                                     Player syncPlayer = Bukkit.getPlayer(((Player) sender).getUniqueId());
                                     if (syncPlayer != null && syncPlayer.isOnline()) {
-                                        syncPlayer.sendMessage("§a邮箱已绑定 " + bindEmail.getEmail() + " 忘记密码时可以用邮箱重置自己的密码");
+                                        syncPlayer.sendMessage(translate("bind-success").replace("{email}", bindEmail.getEmail()));
                                         EmailCode.removeByName(name, EmailCode.Type.Bind);
                                     }
                                 });
@@ -104,10 +100,10 @@ public class CommandBindEmail implements CommandExecutor { //TODO: i18n
                             }
                         });
                     } else {
-                        sender.sendMessage(translate("repw-invalid-code"));
+                        sender.sendMessage(translate("bind-invalid-code"));
                     }
                 } else {
-                    sender.sendMessage("§c你没有待绑定的邮箱，或者验证码已过期");
+                    sender.sendMessage(translate("bind-no-pending-request"));
                 }
             }
             return true;

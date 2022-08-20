@@ -31,7 +31,7 @@ public class Config {
     /**
      * 数据库
      */
-    public static class MySQL {
+    public static class MySQL { //TODO
         public static boolean Enable;
         public static String Host;
         public static String Port;
@@ -50,7 +50,7 @@ public class Config {
         }
     }
 
-    public static class BungeeCord {
+    public static class BungeeCord { //TODO
         public static boolean Enable;
         public static String Host;
         public static String Port;
@@ -85,6 +85,7 @@ public class Config {
         public static long loginTimeout;
         // 死亡状态退出游戏是否记录退出位置 (玩家可以通过死亡时退出服务器然后重新进入，再复活，登录返回死亡地点)
         public static boolean saveDeadPlayerLogoutLocation;
+        public static boolean forceStrongPassword; //TODO
 
         public static void load(){
             FileConfiguration config = getConfig("settings.yml");
@@ -141,7 +142,7 @@ public class Config {
     /**
      * 邮箱找回密码
      */
-    public static class EmailVerify {
+    public static class EmailVerify { //TODO
 
         public static boolean Enable;
         public static String EmailAccount;

@@ -23,7 +23,7 @@ public class CatSeedLogin extends JavaPlugin {
     public static CatSeedLogin instance;
     public static BukkitScheduler scheduler = Bukkit.getScheduler();
     public static SQL sql;
-    public static boolean loadProtocolLib = false;
+    public static boolean hasProtocolLib = false;
 
     @Override
     public void onEnable(){
@@ -56,7 +56,7 @@ public class CatSeedLogin extends JavaPlugin {
         try {
             Class.forName("com.comphenix.protocol.ProtocolLib");
             ProtocolLibListeners.enable();
-            loadProtocolLib = true;
+            hasProtocolLib = true;
         } catch (ClassNotFoundException e) {
             getLogger().warning(translate("no-protocolLib"));
         }
@@ -125,10 +125,8 @@ public class CatSeedLogin extends JavaPlugin {
         Task.cancelAll();
         Bukkit.getOnlinePlayers().forEach(p -> {
             if (!LoginPlayerHelper.isLoggedIn(p.getName())) return;
-            if (!p.isDead() || Config.Settings.saveDeadPlayerLogoutLocation) {
+            if (!p.isDead() || Config.Settings.saveDeadPlayerLogoutLocation)
                 Config.setOfflineLocation(p);
-            }
-
         });
         try {
             sql.getConnection().close();
@@ -143,6 +141,4 @@ public class CatSeedLogin extends JavaPlugin {
     public void runTaskAsync(Runnable runnable){
         scheduler.runTaskAsynchronously(this, runnable);
     }
-
-
 }

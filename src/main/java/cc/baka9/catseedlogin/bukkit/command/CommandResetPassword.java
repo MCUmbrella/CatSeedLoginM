@@ -92,14 +92,11 @@ public class CommandResetPassword implements CommandExecutor {
                                 Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
                                     Player p = Bukkit.getPlayer(lp.getName());
                                     if (p != null && p.isOnline()) {
-                                        if (noMoveBeforeLogin) {
-//                                            PlayerTeleport.teleport(p, Config.Settings.SpawnLocation);
+                                        if (noMoveBeforeLogin)
                                             p.teleport(spawnLocation);
-                                        }
                                         p.sendMessage(translate("repw-success"));
-                                        if (CatSeedLogin.loadProtocolLib) {
+                                        if (CatSeedLogin.hasProtocolLib)
                                             LoginPlayerHelper.sendBlankInventoryPacket(player);
-                                        }
                                     }
                                 });
                             } catch (Exception e) {

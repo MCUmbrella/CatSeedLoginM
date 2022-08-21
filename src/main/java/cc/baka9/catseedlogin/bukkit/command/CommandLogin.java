@@ -38,16 +38,14 @@ public class CommandLogin implements CommandExecutor {
             sender.sendMessage(translate("login-success"));
             player.updateInventory();
             LoginPlayerHelper.recordCurrentIP(player, lp);
-            if (Config.Settings.backAfterLogin && Config.Settings.noMoveBeforeLogin) {
+            if (Config.Settings.backAfterLogin && Config.Settings.noMoveBeforeLogin)
                 Config.getOfflineLocation(player).ifPresent(player::teleport);
-            }
         } else {
             sender.sendMessage(translate("login-wrong-password"));
             CatSeedPlayerLoginEvent loginEvent = new CatSeedPlayerLoginEvent(player, lp.getEmail(), CatSeedPlayerLoginEvent.Result.FAIL);
             Bukkit.getServer().getPluginManager().callEvent(loginEvent);
-            if (Config.EmailVerify.enabled) {
+            if (Config.EmailVerify.enabled)
                 sender.sendMessage(translate("login-wrong-password-can-repw"));
-            }
         }
         return true;
     }

@@ -103,9 +103,8 @@ public class Config {
             backAfterLogin = config.getBoolean("backAfterLogin", defaultConfig.getBoolean("backAfterLogin"));
             noMoveBeforeLogin = config.getBoolean("noMoveBeforeLogin", defaultConfig.getBoolean("noMoveBeforeLogin"));
             List<String> commandWhitelist = config.getStringList("commandWhitelist");
-            if (commandWhitelist.size() == 0) {
+            if (commandWhitelist.size() == 0)
                 commandWhitelist = defaultConfig.getStringList("commandWhitelist");
-            }
             Settings.commandWhitelist.clear();
             Settings.commandWhitelist.addAll(commandWhitelist.stream().map(Pattern::compile).collect(Collectors.toList()));
             loginTimeout = config.getLong("loginTimeout", 120L);
@@ -120,7 +119,6 @@ public class Config {
             config.set("language", language);
             config.set("maxRegPerIP", maxRegPerIP);
             config.set("maxOnlinePerIP", maxOnlinePerIP);
-            config.set("spawnWorld", null);
             config.set("forceStandardPlayerName", forceStandardPlayerName);
             config.set("minPlayerNameLength", minPlayerNameLength);
             config.set("maxPlayerNameLength", maxPlayerNameLength);

@@ -19,6 +19,8 @@ import org.bukkit.event.player.*;
 
 import java.util.regex.Pattern;
 
+import static cc.baka9.catseedlogin.bukkit.Config.Settings.*;
+
 public class Listeners implements Listener {
 
     private boolean playerIsNotMinecraftPlayer(Player p){
@@ -30,9 +32,8 @@ public class Listeners implements Listener {
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
         if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         String input = event.getMessage().toLowerCase();
-        for (Pattern regex : Config.Settings.commandWhitelist) {
+        for (Pattern regex : commandWhitelist)
             if (regex.matcher(input).find()) return;
-        }
         event.setCancelled(true);
 
     }
@@ -50,17 +51,14 @@ public class Listeners implements Listener {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "游戏名字母大小写不匹配,请使用游戏名" + lp.getName() + "重新尝试登录");
             return;
         }
-        if (LoginPlayerHelper.isLoggedIn(name)) {
+        if (LoginPlayerHelper.isLoggedIn(name))
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "玩家 " + lp.getName() + " 已经在线了!");
-        }
         int count = 0;
         String hostAddress = event.getAddress().getHostAddress();
         for (Player p : Bukkit.getOnlinePlayers()) {
             String ip = p.getAddress().getAddress().getHostAddress();
-            if (ip.equals(hostAddress)) {
-                count++;
-            }
-            if (count >= Config.Settings.maxOnlinePerIP) {
+            if (ip.equals(hostAddress)) count++;
+            if (count >= maxOnlinePerIP) {
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "太多相同ip的账号同时在线!");
                 return;
             }
@@ -108,23 +106,17 @@ public class Listeners implements Listener {
     //登录之前不会受到伤害
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event){
-        if (Config.Settings.noDamageBeforeLogin) {
-
+        if (noDamageBeforeLogin) {
             Entity entity = event.getEntity();
-            if (entity instanceof Player && !playerIsNotMinecraftPlayer((Player) entity)) {
-                if (!LoginPlayerHelper.isLoggedIn(entity.getName())) {
+            if (entity instanceof Player && !playerIsNotMinecraftPlayer((Player) entity))
+                if (!LoginPlayerHelper.isLoggedIn(entity.getName()))
                     event.setCancelled(true);
-                }
-
-            }
-
         }
-
     }
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event){
-        if (Config.Settings.noMoveBeforeLogin && event.getTo().equals(Config.Settings.spawnLocation)) return;
+        if (noMoveBeforeLogin && event.getTo().equals(spawnLocation)) return;
         if (playerIsNotMinecraftPlayer(event.getPlayer())) return;
         if (LoginPlayerHelper.isLoggedIn(event.getPlayer().getName())) return;
         event.setCancelled(true);
@@ -148,64 +140,52 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event){
-        Player player = event.getPlayer();
-        if (playerIsNotMinecraftPlayer(player)) return;
-        if (LoginPlayerHelper.isLoggedIn(player.getName())) return;
-        Location from = event.getFrom();
-        Location to = event.getTo();
-        if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ() && from.getY() - to.getY() >= 0.0D) {
-            return;
-        }
-
-        if (Config.Settings.noMoveBeforeLogin) {
-            player.teleport(Config.Settings.spawnLocation);
-        } else {
+        if (noMoveBeforeLogin)
+        {
+            Player player = event.getPlayer();
+            if (playerIsNotMinecraftPlayer(player)) return;
+            if (LoginPlayerHelper.isLoggedIn(player.getName())) return;
+            Location from = event.getFrom();
+            Location to = event.getTo();
+            if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ() && from.getY() - to.getY() >= 0.0D) return;
+            player.teleport(spawnLocation);
             event.setCancelled(true);
         }
-
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
         if (LoginPlayerHelper.isLoggedIn(player.getName())) {
-            if (!player.isDead() || Config.Settings.saveDeadPlayerLogoutLocation) {
+            if (!player.isDead() || saveDeadPlayerLogoutLocation)
                 Config.setOfflineLocation(player);
-            }
-            Bukkit.getScheduler().runTaskLater(CatSeedLogin.instance, () -> LoginPlayerHelper.remove(player.getName()), Config.Settings.rejoinInterval);
+            Bukkit.getScheduler().runTaskLater(CatSeedLogin.instance, () -> LoginPlayerHelper.remove(player.getName()), rejoinInterval);
         }
         Task.getTaskAutoKick().playerJoinTime.remove(player.getName());
-
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player p = event.getPlayer();
         Cache.refresh(p.getName());
-        if (Config.Settings.noMoveBeforeLogin) {
-            p.teleport(Config.Settings.spawnLocation);
-        }
+        if (noMoveBeforeLogin) p.teleport(spawnLocation);
     }
 
     //id只能下划线字母数字
     @EventHandler
-    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event){
+    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event){ //TODO: i18n
         String name = event.getName();
-        if (Config.Settings.forceStandardPlayerName) {
-            if (!name.matches("^[0-9a-zA-Z_]+$")) {
+        if (forceStandardPlayerName)
+            if (!name.matches("^[0-9a-zA-Z_]+$"))
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                         "请使用由数字,字母和下划线组成的游戏名,才能进入游戏");
-            }
-        }
-        if (name.length() < Config.Settings.minPlayerNameLength) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    "你的游戏名太短了,至少需要 " + Config.Settings.minPlayerNameLength + " 个字符的长度");
-        }
-        if (name.length() > Config.Settings.maxPlayerNameLength) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    "你的游戏名太长了,最长只能到达 " + Config.Settings.maxPlayerNameLength + " 个字符的长度");
-        }
 
+        if (name.length() < minPlayerNameLength)
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    "你的游戏名太短了,至少需要 " + minPlayerNameLength + " 个字符的长度");
+
+        if (name.length() > maxPlayerNameLength)
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    "你的游戏名太长了,最长只能到达 " + maxPlayerNameLength + " 个字符的长度");
     }
-
 }

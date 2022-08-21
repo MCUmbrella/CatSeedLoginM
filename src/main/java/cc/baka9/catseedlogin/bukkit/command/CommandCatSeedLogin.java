@@ -224,7 +224,7 @@ public class CommandCatSeedLogin implements CommandExecutor {
         return false;
     }
 
-    private boolean delPlayer(CommandSender sender, String[] args){
+    private boolean delPlayer(CommandSender sender, String[] args){ //TODO: i18n
         if (args.length > 1 && args[0].equalsIgnoreCase("delplayer")) {
             String name = args[1];
             LoginPlayer lp = Cache.getIgnoreCase(name);
@@ -288,9 +288,8 @@ public class CommandCatSeedLogin implements CommandExecutor {
                                 p.sendMessage("§c密码已被管理员重新设置,请重新登录");
                                 if (Config.Settings.noMoveBeforeLogin) {
                                     p.teleport(Config.Settings.spawnLocation);
-                                    if (CatSeedLogin.loadProtocolLib) {
+                                    if (CatSeedLogin.hasProtocolLib)
                                         LoginPlayerHelper.sendBlankInventoryPacket(p);
-                                    }
                                 }
                             }
                         });

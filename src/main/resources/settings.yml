@@ -19,3 +19,5 @@ commandWhitelist:
   - /(?i)worldedit cui
 loginTimeout: 120
 saveDeadPlayerLogoutLocation: true
+forceStrongPassword: true
+maxPasswordLength: 16

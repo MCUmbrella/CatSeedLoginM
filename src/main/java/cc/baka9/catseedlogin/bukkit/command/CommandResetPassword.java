@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
+import static cc.baka9.catseedlogin.bukkit.Config.Settings.*;
 import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandResetPassword implements CommandExecutor {
@@ -76,8 +77,8 @@ public class CommandResetPassword implements CommandExecutor {
                     String code = args[1], pwd = args[2];
 
                     if (emailCode.getCode().equals(code)) {
-                        if (!CommonUtil.isStrongPassword(pwd)) {
-                            sender.sendMessage(translate("password-too-weak"));
+                        if (forceStrongPassword && !CommonUtil.isStrongPassword(pwd)) {
+                            sender.sendMessage(translate("password-too-weak").replace("{maxPwdLen}", String.valueOf(maxPasswordLength)));
                             return true;
                         }
                         sender.sendMessage(translate("please-wait"));
@@ -91,9 +92,9 @@ public class CommandResetPassword implements CommandExecutor {
                                 Bukkit.getScheduler().runTask(CatSeedLogin.instance, () -> {
                                     Player p = Bukkit.getPlayer(lp.getName());
                                     if (p != null && p.isOnline()) {
-                                        if (Config.Settings.noMoveBeforeLogin) {
+                                        if (noMoveBeforeLogin) {
 //                                            PlayerTeleport.teleport(p, Config.Settings.SpawnLocation);
-                                            p.teleport(Config.Settings.spawnLocation);
+                                            p.teleport(spawnLocation);
                                         }
                                         p.sendMessage(translate("repw-success"));
                                         if (CatSeedLogin.loadProtocolLib) {

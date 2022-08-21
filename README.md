@@ -158,6 +158,10 @@ commandWhitelist:
 loginTimeout: 120
 # 如果设定为true，玩家死亡后不复活直接下线也会被保存下线位置。
 saveDeadPlayerLogoutLocation: true
+# 如果设定为true，插件会要求密码必须在6位及以上，并且包含数字和字母
+forceStrongPassword: true
+# 密码的最大长度（大于6，只在forceStrongPassword为true时起作用）
+maxPasswordLength: 16
 ```
 
 </p></details>
@@ -182,28 +186,20 @@ MySQL:
 
 如果不使用绑定邮箱、找回密码等跟邮箱有关的功能，就请无视此配置
 ```yaml
-# Enable the email feature? true = enable, false = disable
 # 开启邮件验证、重置密码功能？（true：开启，false：不开启）
 enabled: false
-# The user used to connect to the SMTP server
 # 连接SMTP服务器时使用的用户名
 account: "15555555555@163.com"
-# The password used to connect to the SMTP server
 # 连接SMTP服务器时使用的密码
 password: "PASSWORDPASSWORD"
-# The address of the SMTP server
 # SMTP服务的地址
 smtpHost: "smtp.163.com"
-# The port of the SMTP server. Usually 25 (no SSL), 465 and 587 (SSL)
 # SMTP服务的端口
 smtpPort: "25"
-# Enable SSL connection? true = enable
 # 启用SSL连接
 ssl: false
-# The sender of the email
 # 邮件中显示的发件人
 from: "CatSeedLoginM"
-# Enable debug mode? It will spam your console
 # 启用调试输出
 debug: false
 ```

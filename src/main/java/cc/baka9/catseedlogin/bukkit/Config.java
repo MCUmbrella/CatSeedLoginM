@@ -83,33 +83,36 @@ public class Config {
         public static long loginTimeout;
         // 死亡状态退出游戏是否记录退出位置 (玩家可以通过死亡时退出服务器然后重新进入，再复活，登录返回死亡地点)
         public static boolean saveDeadPlayerLogoutLocation;
-        public static boolean forceStrongPassword; //TODO
+        public static boolean forceStrongPassword = true;
+        public static int maxPasswordLength = 16;
 
         public static void load(){
             FileConfiguration config = getConfig("settings.yml");
-            FileConfiguration resourceConfig = getResourceConfig("settings.yml");
+            FileConfiguration defaultConfig = getResourceConfig("settings.yml");
 
             language = config.getString("language", "en_US");
             I18nUtil.setLanguage(CatSeedLogin.instance, language);
             CatSeedLogin.instance.getLogger().info("Language: " + I18nUtil.getLanguage() + " (" + language + ") by " + I18nUtil.getLanguageFileContributor());
-            maxRegPerIP = config.getInt("maxRegPerIP", resourceConfig.getInt("maxRegPerIP"));
-            maxOnlinePerIP = config.getInt("maxOnlinePerIP", resourceConfig.getInt("maxOnlinePerIP"));
-            forceStandardPlayerName = config.getBoolean("forceStandardPlayerName", resourceConfig.getBoolean("forceStandardPlayerName"));
-            minPlayerNameLength = config.getInt("minPlayerNameLength", resourceConfig.getInt("minPlayerNameLength"));
-            maxPlayerNameLength = config.getInt("maxPlayerNameLength", resourceConfig.getInt("maxPlayerNameLength"));
-            noDamageBeforeLogin = config.getBoolean("noDamageBeforeLogin", resourceConfig.getBoolean("noDamageBeforeLogin"));
-            rejoinInterval = config.getLong("rejoinInterval", resourceConfig.getLong("rejoinInterval"));
-            backAfterLogin = config.getBoolean("backAfterLogin", resourceConfig.getBoolean("backAfterLogin"));
-            noMoveBeforeLogin = config.getBoolean("noMoveBeforeLogin", resourceConfig.getBoolean("noMoveBeforeLogin"));
+            maxRegPerIP = config.getInt("maxRegPerIP", defaultConfig.getInt("maxRegPerIP"));
+            maxOnlinePerIP = config.getInt("maxOnlinePerIP", defaultConfig.getInt("maxOnlinePerIP"));
+            forceStandardPlayerName = config.getBoolean("forceStandardPlayerName", defaultConfig.getBoolean("forceStandardPlayerName"));
+            minPlayerNameLength = config.getInt("minPlayerNameLength", defaultConfig.getInt("minPlayerNameLength"));
+            maxPlayerNameLength = config.getInt("maxPlayerNameLength", defaultConfig.getInt("maxPlayerNameLength"));
+            noDamageBeforeLogin = config.getBoolean("noDamageBeforeLogin", defaultConfig.getBoolean("noDamageBeforeLogin"));
+            rejoinInterval = config.getLong("rejoinInterval", defaultConfig.getLong("rejoinInterval"));
+            backAfterLogin = config.getBoolean("backAfterLogin", defaultConfig.getBoolean("backAfterLogin"));
+            noMoveBeforeLogin = config.getBoolean("noMoveBeforeLogin", defaultConfig.getBoolean("noMoveBeforeLogin"));
             List<String> commandWhitelist = config.getStringList("commandWhitelist");
             if (commandWhitelist.size() == 0) {
-                commandWhitelist = resourceConfig.getStringList("commandWhitelist");
+                commandWhitelist = defaultConfig.getStringList("commandWhitelist");
             }
             Settings.commandWhitelist.clear();
             Settings.commandWhitelist.addAll(commandWhitelist.stream().map(Pattern::compile).collect(Collectors.toList()));
             loginTimeout = config.getLong("loginTimeout", 120L);
             spawnLocation = str2Location(config.getString("spawnLocation"));
-            saveDeadPlayerLogoutLocation = config.getBoolean("saveDeadPlayerLogoutLocation", resourceConfig.getBoolean("saveDeadPlayerLogoutLocation"));
+            saveDeadPlayerLogoutLocation = config.getBoolean("saveDeadPlayerLogoutLocation", defaultConfig.getBoolean("saveDeadPlayerLogoutLocation"));
+            forceStrongPassword = config.getBoolean("forceStrongPassword", defaultConfig.getBoolean("forceStrongPassword"));
+            maxPasswordLength = Math.max(config.getInt("maxPasswordLength", defaultConfig.getInt("maxPasswordLength")), 6);
         }
 
         public static void save(){
@@ -129,6 +132,8 @@ public class Config {
             config.set("spawnLocation", loc2String(spawnLocation));
             config.set("commandWhitelist", commandWhitelist.stream().map(Pattern::toString).collect(Collectors.toList()));
             config.set("saveDeadPlayerLogoutLocation", saveDeadPlayerLogoutLocation);
+            config.set("forceStrongPassword", forceStrongPassword);
+            config.set("maxPasswordLength", maxPasswordLength);
             try {
                 config.save(new File(CatSeedLogin.instance.getDataFolder(), "settings.yml"));
             } catch (IOException e) {
@@ -254,12 +259,9 @@ public class Config {
             properties.load(is);
             String worldName = properties.getProperty("level-name");
             return Bukkit.getWorld(worldName);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         return Bukkit.getWorlds().get(0);
     }
-
-
 }

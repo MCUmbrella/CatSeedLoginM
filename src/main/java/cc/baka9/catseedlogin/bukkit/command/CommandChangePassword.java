@@ -1,7 +1,6 @@
 package cc.baka9.catseedlogin.bukkit.command;
 
 import cc.baka9.catseedlogin.bukkit.CatSeedLogin;
-import cc.baka9.catseedlogin.bukkit.Config;
 import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
@@ -15,6 +14,8 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
+import static cc.baka9.catseedlogin.bukkit.Config.*;
+import static cc.baka9.catseedlogin.bukkit.Config.Settings.*;
 import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandChangePassword implements CommandExecutor {
@@ -42,8 +43,8 @@ public class CommandChangePassword implements CommandExecutor {
             sender.sendMessage(translate("chpw-new-password-not-same"));
             return true;
         }
-        if (!CommonUtil.isStrongPassword(args[1])) {
-            sender.sendMessage(translate("password-too-weak"));
+        if (forceStrongPassword && !CommonUtil.isStrongPassword(args[1])) {
+            sender.sendMessage(translate("password-too-weak").replace("{maxPwdLen}", String.valueOf(maxPasswordLength)));
             return true;
         }
         if (!Cache.isLoaded) {
@@ -61,9 +62,9 @@ public class CommandChangePassword implements CommandExecutor {
                     Player player = Bukkit.getPlayer(((Player) sender).getUniqueId());
                     if (player != null && player.isOnline()) {
                         player.sendMessage(translate("chpw-success"));
-                        Config.setOfflineLocation(player);
-                        if (Config.Settings.noMoveBeforeLogin) {
-                            player.teleport(Config.Settings.spawnLocation);
+                        setOfflineLocation(player);
+                        if (noMoveBeforeLogin) {
+                            player.teleport(spawnLocation);
                             if (CatSeedLogin.loadProtocolLib) {
                                 LoginPlayerHelper.sendBlankInventoryPacket(player);
                             }

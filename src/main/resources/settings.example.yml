@@ -68,3 +68,13 @@ loginTimeout: 120
 # If true, the dead player's logout location will be saved.
 # 如果设定为true，玩家死亡后不复活直接下线也会被保存下线位置。
 saveDeadPlayerLogoutLocation: true
+
+# Are passwords required to be 6 or more digits and contain both letters and numbers to meet basic security?
+# If true, players will be denied when using weak passwords for operations.
+# 如果设定为true，插件会要求密码必须在6位及以上，并且包含数字和字母
+forceStrongPassword: true
+
+# What is the maximum length of the password? Enter a value greater than 6.
+# Only works when forceStrongPassword is true.
+# 密码的最大长度（大于6，只在forceStrongPassword为true时起作用）
+maxPasswordLength: 16

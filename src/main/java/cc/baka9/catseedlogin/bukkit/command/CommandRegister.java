@@ -1,7 +1,6 @@
 package cc.baka9.catseedlogin.bukkit.command;
 
 import cc.baka9.catseedlogin.bukkit.CatSeedLogin;
-import cc.baka9.catseedlogin.bukkit.Config;
 import cc.baka9.catseedlogin.bukkit.database.Cache;
 import cc.baka9.catseedlogin.bukkit.event.CatSeedPlayerRegisterEvent;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayer;
@@ -15,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+import static cc.baka9.catseedlogin.bukkit.Config.Settings.*;
 import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class CommandRegister implements CommandExecutor {
@@ -36,8 +36,8 @@ public class CommandRegister implements CommandExecutor {
             sender.sendMessage(translate("reg-password-not-same"));
             return true;
         }
-        if (!CommonUtil.isStrongPassword(args[0])) {
-            sender.sendMessage(translate("password-too-weak"));
+        if (forceStrongPassword && !CommonUtil.isStrongPassword(args[0])) {
+            sender.sendMessage(translate("password-too-weak").replace("{maxPwdLen}", String.valueOf(maxPasswordLength)));
             return true;
         }
         if (!Cache.isLoaded) {
@@ -48,7 +48,7 @@ public class CommandRegister implements CommandExecutor {
             try {
                 String currentIp = player.getAddress().getAddress().getHostAddress();
                 List<LoginPlayer> LoginPlayerListlikeByIp = CatSeedLogin.sql.getLikeByIp(currentIp);
-                if (LoginPlayerListlikeByIp.size() >= Config.Settings.maxRegPerIP) {
+                if (LoginPlayerListlikeByIp.size() >= maxRegPerIP) {
                     sender.sendMessage(translate("reg-accounts-limit-exceeded")
                             .replace("{count}", String.valueOf(LoginPlayerListlikeByIp.size()))
                             .replace("{accounts}", String.join(", ", LoginPlayerListlikeByIp.stream().map(LoginPlayer::getName).toArray(String[]::new))));

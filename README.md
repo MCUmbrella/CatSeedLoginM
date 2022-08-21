@@ -141,7 +141,7 @@ maxPlayerNameLength: 15
 # 如果设定为true，未登录玩家将不会受到伤害。
 noDamageBeforeLogin: true
 # 玩家在下线多少秒后可以重新进入服务器？
-rejoinInterval: 60
+rejoinInterval: 3
 # 如果设定为true，玩家登录成功后将会被传送到下线位置。
 backAfterLogin: true
 # 如果设定为true，未登录玩家将不能移动。

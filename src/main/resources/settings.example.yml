@@ -37,7 +37,7 @@ noDamageBeforeLogin: true
 
 # After how many seconds should a player be able to re-enter the server?
 # 玩家在下线多少秒后可以重新进入服务器？
-rejoinInterval: 60
+rejoinInterval: 3
 
 # Should we teleport players to their logout location after they logged in successfully?
 # If true, logged-in players will be teleported.

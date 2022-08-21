@@ -159,7 +159,7 @@ public class Listeners implements Listener {
         if (LoginPlayerHelper.isLoggedIn(player.getName())) {
             if (!player.isDead() || saveDeadPlayerLogoutLocation)
                 Config.setOfflineLocation(player);
-            Bukkit.getScheduler().runTaskLater(CatSeedLogin.instance, () -> LoginPlayerHelper.remove(player.getName()), rejoinInterval);
+            Bukkit.getScheduler().runTaskLater(CatSeedLogin.instance, () -> LoginPlayerHelper.remove(player.getName()), rejoinInterval * 20);
         }
         Task.getTaskAutoKick().playerJoinTime.remove(player.getName());
     }

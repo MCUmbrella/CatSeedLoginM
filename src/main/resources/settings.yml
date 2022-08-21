@@ -8,7 +8,7 @@ forceStandardPlayerName: true
 minPlayerNameLength: 2
 maxPlayerNameLength: 15
 noDamageBeforeLogin: true
-rejoinInterval: 60
+rejoinInterval: 3
 backAfterLogin: true
 noMoveBeforeLogin: true
 commandWhitelist:

@@ -135,6 +135,7 @@ public class CatSeedLogin extends JavaPlugin {
             e.printStackTrace();
         }
         Config.save();
+        Communication.socketServerStop();
         super.onDisable();
     }
 

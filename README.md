@@ -2,11 +2,7 @@
 
 <details><summary>原作者闲言碎语</summary><p>
 
-插件在Spigot API 1.13.2环境下开发的，
-由于现在很多登录插件功能配置非常多，配置起来麻烦并且有很多用不到的功能。
-crazylogin在高版本有各种匪夷所思的bug（总之我是被crazylogin从1.13.2的版本劝退自己开始造起了登录插件），
-authme配置文件对一些经验不足的服主配置起来极其麻烦，甚至有人从入门到弃坑。
-有人测试1.7.10和1.11版本的服务器可以用，理论上应该兼容1.7.10及以后的所有版本。
+插件在Spigot API 1.13.2环境下开发的，理论上应该兼容1.7.10及以后的所有版本。
 
 </p></details>
 
@@ -52,8 +48,8 @@ authme配置文件对一些经验不足的服主配置起来极其麻烦，甚�
 #### 如果是正常使用：
 * 插件放入plugins文件夹重启服务器
 #### 如果是配合BungeeCord连接多个子服使用：
-* 插件放入作为登录服的那个子服plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin文件夹修改bungeecord.yml中的配置，然后执行重载指令
-* 复制一份插件再放入BungeeCord的plugins文件夹重启服务器，然后在plugins文件夹下找到CatSeedLogin-Bungee文件夹，修改bungeecord.yml中的配置，然后执行重载指令
+* 把插件放入登录服的plugins文件夹，重启服务器
+* 再复制一个插件，放入BungeeCord的plugins文件夹，重启Bungee
 
 </p></details>
 
@@ -216,7 +212,7 @@ debug: false
 ```yaml
 # 是否开启bungeecord模式（false = 不开启）  
 Enable: false  
-# 设置IP（如果可以建议使用内网），会使用这个ip开启一个通讯服务与bc建立端通讯  
+# 设置IP（暂时只建议使用内网），会使用这个ip开启一个通讯服务与bc建立端通讯  
 Host: 127.0.0.1  
 # 设置端口  
 Port: 2333  
@@ -228,7 +224,7 @@ AuthKey: ""
 <details><summary>bc端配置文件：bungeecord.yml</summary><p>
 
 ```yaml
-# 设置IP，需要跟子服的一样（如果可以建议使用内网），从这个ip跟子服建立通讯  
+# 设置IP，需要跟子服的一样
 Host: 127.0.0.1  
 # 设置端口，需要跟子服一样  
 Port: 2333  

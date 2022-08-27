@@ -20,6 +20,7 @@ import org.bukkit.event.player.*;
 import java.util.regex.Pattern;
 
 import static cc.baka9.catseedlogin.bukkit.Config.Settings.*;
+import static vip.floatationdevice.msu.I18nUtil.translate;
 
 public class Listeners implements Listener {
 
@@ -41,25 +42,25 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerLogin(AsyncPlayerPreLoginEvent event){
         if (!Cache.isLoaded) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "服务器还在初始化..");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, translate("cache-not-loaded"));
             return;
         }
         String name = event.getName();
         LoginPlayer lp = Cache.getIgnoreCase(name);
         if (lp == null) return;
         if (!lp.getName().equals(name)) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "游戏名字母大小写不匹配,请使用游戏名" + lp.getName() + "重新尝试登录");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, translate("player-name-case-not-match").replace("{name}", lp.getName()));
             return;
         }
         if (LoginPlayerHelper.isLoggedIn(name))
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "玩家 " + lp.getName() + " 已经在线了!");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, translate("player-already-online").replace("{name}", lp.getName()));
         int count = 0;
         String hostAddress = event.getAddress().getHostAddress();
         for (Player p : Bukkit.getOnlinePlayers()) {
             String ip = p.getAddress().getAddress().getHostAddress();
             if (ip.equals(hostAddress)) count++;
             if (count >= maxOnlinePerIP) {
-                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "太多相同ip的账号同时在线!");
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, translate("same-ip-online-limit"));
                 return;
             }
         }
@@ -173,19 +174,19 @@ public class Listeners implements Listener {
 
     //id只能下划线字母数字
     @EventHandler
-    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event){ //TODO: i18n
+    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event){
         String name = event.getName();
         if (forceStandardPlayerName)
             if (!name.matches("^\\w+$"))
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                        "请使用由数字,字母和下划线组成的游戏名,才能进入游戏");
+                        translate("non-standard-player-name"));
 
         if (name.length() < minPlayerNameLength)
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    "你的游戏名太短了,至少需要 " + minPlayerNameLength + " 个字符的长度");
+                    translate("player-name-too-short").replace("{length}", String.valueOf(minPlayerNameLength)));
 
         if (name.length() > maxPlayerNameLength)
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    "你的游戏名太长了,最长只能到达 " + maxPlayerNameLength + " 个字符的长度");
+                    translate("player-name-too-long").replace("{length}", String.valueOf(maxPlayerNameLength)));
     }
 }

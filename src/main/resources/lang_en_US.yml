@@ -52,6 +52,13 @@ password-too-weak: "§cPassword must consist of numbers and letters between 6 an
 internal-error: "§cAn internal error occurred!"
 database-error: "§cAn error occurred while operating the database!"
 no-protocolLib: "The server does not have the ProtocolLib plugin loaded and cannot hide the inventory before the player logs in"
+non-standard-player-name: "Player name can only contain letters, numbers and underscores"
+player-name-too-long: "Your player name is too long. The maximum allowed length is {length} characters"
+player-name-too-short: "Your player name is too short. The minimum allowed length is {length} characters"
+player-already-online: "The player {name} is already online"
+same-ip-online-limit: "This IP address has too many players online"
+player-name-case-not-match: "The case of the player name is not match. Please change the player name to {name}"
+cache-not-loaded: "The login plugin has not loaded"
 
 # email
 bind-email-subject: "Verification Code (Binding Email)"

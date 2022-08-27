@@ -18,22 +18,25 @@ public class I18nUtil
 
     /**
      * Set the language of the plugin.
-     * @param instance The instance of the plugin.
-     * @param localeCode Locale code of the language to use (for example, "en_US" or "zh_CN").
-     *   This parameter is used to locate the language file. If localeCode is "xx_XX", the
+     * @param plugin The class of the plugin.
+     * @param locale Locale code of the language to use (for example, "en_US" or "zh_CN").
+     * This parameter is used to locate the language file. If localeCode is "xx_XX", the
      * plugin will try to find "lang_xx_XX.yml" under the plugin config folder. If not found,
      * the plugin will try to find it in the jar file and copy it to the config folder. If
      * the plugin still can't find it in the jar file, an exception will be thrown.
      * @return The locale code.
+     * @throws IllegalArgumentException if plugin or locale is null.
+     * @throws RuntimeException if the 'language-file-version' key is illegal or not found.
      */
-    public static String setLanguage(JavaPlugin instance, String localeCode)
+    public static String setLanguage(Class<? extends JavaPlugin> plugin, String locale)
     {
-        if(instance == null) throw new IllegalArgumentException("Plugin instance cannot be null");
-        if(localeCode == null || localeCode.isEmpty())
-            throw new IllegalArgumentException("Language code cannot be null or empty");
-        code = localeCode;
-        File langFile = new File(instance.getDataFolder(), "lang_" + code + ".yml");
-        if(!langFile.exists()) instance.saveResource("lang_" + code + ".yml", false);
+        if(plugin == null) throw new IllegalArgumentException("Plugin instance cannot be null");
+        JavaPlugin p = JavaPlugin.getProvidingPlugin(plugin);
+        if(locale == null || locale.isEmpty())
+            throw new IllegalArgumentException("Locale cannot be null or empty");
+        code = locale;
+        File langFile = new File(p.getDataFolder(), "lang_" + code + ".yml");
+        if(!langFile.exists()) p.saveResource("lang_" + code + ".yml", false);
         l = YamlConfiguration.loadConfiguration(langFile);
         if(!l.isInt("language-file-version"))
             throw new RuntimeException("Language file version is illegal or not found");

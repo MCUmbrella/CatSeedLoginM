@@ -91,7 +91,7 @@ public class Config {
             FileConfiguration defaultConfig = getResourceConfig("settings.yml");
 
             language = config.getString("language", "en_US");
-            I18nUtil.setLanguage(CatSeedLogin.instance, language);
+            I18nUtil.setLanguage(CatSeedLogin.class, language);
             CatSeedLogin.instance.getLogger().info("Language: " + I18nUtil.getLanguage() + " (" + language + ") by " + I18nUtil.getLanguageFileContributor());
             maxRegPerIP = config.getInt("maxRegPerIP", defaultConfig.getInt("maxRegPerIP"));
             maxOnlinePerIP = config.getInt("maxOnlinePerIP", defaultConfig.getInt("maxOnlinePerIP"));
